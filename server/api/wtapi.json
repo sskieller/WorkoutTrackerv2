@@ -1,0 +1,884 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Swagger Petstore",
+    "description": "Schemas: Users, Workout Programs, Workout Exercises, Workout Activities.  Users: get, put, post, delete. WorkoutPrograms: get, put, post,(delete). WorkourExercises: get,put,post,(delete). WorkoutActivities: get,put,post",
+    "contact": {
+      "email": "soren.skieller@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "user",
+      "description": "Users and login"
+    },
+    {
+      "name": "userPrograms",
+      "description": "Programs related to users"
+    },
+    {
+      "name": "userActivities",
+      "description": "Activities related to users"
+    },
+    {
+      "name": "workoutProgram",
+      "description": "Workout programs"
+    }
+  ],
+  "servers": [
+    {
+      "url": "/api/v1/"
+    }
+  ],
+  "paths": {
+    "/user": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Create user",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "createUser",
+        "requestBody": {
+          "description": "Created user object",
+          "content": {
+            "*/*": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {}
+          }
+        },
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/user/createWithArray": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Creates list of users with given input array",
+        "operationId": "createUsersWithArrayInput",
+        "requestBody": {
+          "description": "List of user object",
+          "content": {
+            "*/*": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {}
+          }
+        },
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/user/login": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Logs user into the system",
+        "operationId": "loginUser",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "description": "The user name for login",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "The password for login in clear text",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/user/logout": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Logs out current logged in user session",
+        "operationId": "logoutUser",
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/user/{username}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get user by user name",
+        "operationId": "getUserByName",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "The name that needs to be fetched. Use user1 for testing. ",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username supplied",
+            "content": {}
+          },
+          "404": {
+            "description": "User not found",
+            "content": {}
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Updated user",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "updateUser",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "name that need to be updated",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Updated user object",
+          "content": {
+            "*/*": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Invalid user supplied",
+            "content": {}
+          },
+          "404": {
+            "description": "User not found",
+            "content": {}
+          }
+        },
+        "x-codegen-request-body-name": "body"
+      },
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Delete user",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "deleteUser",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "The name that needs to be deleted",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid username supplied",
+            "content": {}
+          },
+          "404": {
+            "description": "User not found",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/user/{username}/workoutProgram": {
+      "post": {
+        "tags": [
+          "userPrograms"
+        ],
+        "summary": "Create workout program",
+        "description": "This can only be done for a logged in user",
+        "operationId": "createWorkoutProgram",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "The name that needs to be fetched. Use user1 for testing. ",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Created workoutProgram object",
+          "content": {
+            "*/*": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkoutProgram"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {}
+          }
+        },
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/user/{username}/workoutProgram/{workoutProgramName}": {
+      "get": {
+        "tags": [
+          "userPrograms"
+        ],
+        "summary": "Get workout program by name",
+        "operationId": "getWorkoutProgramByName",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "The name of the username that the workout activity is related to",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "workoutProgramName",
+            "in": "path",
+            "description": "The name of the workout program that needs to be fetched",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkoutProgram"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkoutProgram"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied",
+            "content": {}
+          },
+          "404": {
+            "description": "Workout program not found",
+            "content": {}
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "userPrograms"
+        ],
+        "summary": "Update an existing Workout Program",
+        "operationId": "updateWorkoutProgram",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "The name of the username that the workout activity is related to",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "workoutProgramName",
+            "in": "path",
+            "description": "The name of the workout program that needs to be updated",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "workoutProgram object that needs to be added to database",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkoutProgram"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkoutProgram"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied",
+            "content": {}
+          },
+          "404": {
+            "description": "Workout Program not found",
+            "content": {}
+          },
+          "405": {
+            "description": "Validation exception",
+            "content": {}
+          }
+        },
+        "security": [
+          {
+            "wt_auth": []
+          }
+        ],
+        "x-codegen-request-body-name": "body"
+      },
+      "delete": {
+        "tags": [
+          "userPrograms"
+        ],
+        "summary": "Delete workout program",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "deleteWorkoutProgram",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "The name of the username that the workout activity is related to",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "workoutProgramName",
+            "in": "path",
+            "description": "The name that needs to be deleted",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied",
+            "content": {}
+          },
+          "404": {
+            "description": "Workout program not found",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/user/{username}/workoutActivity": {
+      "get": {
+        "tags": [
+          "userActivities"
+        ],
+        "summary": "Get all workout activities",
+        "operationId": "getAllWorkoutActivity",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "The name that needs to be fetched. Use user1 for testing. ",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkoutActivity"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkoutActivity"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No workout activities found",
+            "content": {}
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "userActivities"
+        ],
+        "summary": "Create workout activity",
+        "description": "This can only be done for a logged in user",
+        "operationId": "createWorkoutActivity",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "The name that needs to be fetched. Use user1 for testing. ",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Created workoutActivity object",
+          "content": {
+            "*/*": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkoutActivity"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {}
+          }
+        },
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/user/{username}/workoutActivity/{workoutActivityName}": {
+      "get": {
+        "tags": [
+          "userActivities"
+        ],
+        "summary": "Get workout activity by name",
+        "operationId": "getWorkoutActivityByName",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "The name of the username that the workout activity is related to",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "workoutActivityName",
+            "in": "path",
+            "description": "The name of the workout activity that needs to be fetched",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkoutActivity"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkoutActivity"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied",
+            "content": {}
+          },
+          "404": {
+            "description": "Workout activity not found",
+            "content": {}
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "userActivities"
+        ],
+        "summary": "Update an existing Workout Activity",
+        "operationId": "updateWorkoutActivity",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "The name of the username that the workout activity is related to",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "workoutActivityName",
+            "in": "path",
+            "description": "The name of the workout activity that needs to be updated",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "workoutActivity object that needs to be added to database",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkoutActivity"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkoutActivity"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied",
+            "content": {}
+          },
+          "404": {
+            "description": "Workout Activity not found",
+            "content": {}
+          },
+          "405": {
+            "description": "Validation exception",
+            "content": {}
+          }
+        },
+        "security": [
+          {
+            "wt_auth": []
+          }
+        ],
+        "x-codegen-request-body-name": "body"
+      },
+      "delete": {
+        "tags": [
+          "userActivities"
+        ],
+        "summary": "Delete workout activity",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "deleteWorkoutActivity",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "The name of the username that the workout activity is related to",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "workoutActivityName",
+            "in": "path",
+            "description": "The name of the workout activity that needs to be deleted",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied",
+            "content": {}
+          },
+          "404": {
+            "description": "Workout activity not found",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/workoutProgram": {
+      "get": {
+        "tags": [
+          "workoutProgram"
+        ],
+        "summary": "Get all workout programs",
+        "operationId": "getAllWorkoutPrograms",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkoutProgram"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkoutProgram"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No workout Programs found",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "responses": {
+      "UnauthorizedError": {
+        "description": "Access token is missing or invalid"
+      }
+    },
+    "schemas": {
+      "WorkoutExercise": {
+        "required": [
+          "exercise",
+          "description",
+          "sets",
+          "repstime"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "exercise": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "sets": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "repstime": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "Workout Exercise"
+        }
+      },
+      "WorkoutProgram": {
+        "required": [
+          "name",
+          "description"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "exercises": {
+            "$ref": "#/components/schemas/WorkoutExercise"
+          }
+        },
+        "xml": {
+          "name": "Workout Program"
+        }
+      },
+      "WorkoutActivity": {
+        "required": [
+          "name",
+          "description"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "exercises": {
+            "$ref": "#/components/schemas/WorkoutExercise"
+          }
+        }
+      },
+      "User": {
+        "required": [
+          "username",
+          "firstName",
+          "lastName",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "username": {
+            "type": "string",
+            "example": "bob423"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "Bob"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Jensen"
+          },
+          "password": {
+            "type": "string"
+          },
+          "workoutPrograms": {
+            "$ref": "#/components/schemas/WorkoutProgram"
+          },
+          "workoutActivities": {
+            "$ref": "#/components/schemas/WorkoutActivity"
+          }
+        },
+        "xml": {
+          "name": "User"
+        }
+      }
+    },
+    "securitySchemes": {
+      "wt_auth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
