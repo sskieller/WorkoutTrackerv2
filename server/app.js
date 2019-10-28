@@ -1,4 +1,12 @@
 'use strict';
+// Materials to be used: 
+// Get Programming with Nodejs: Chapter 24 and 28
+// Angular Development with Typescript: Chapter 7, 11 & 12
+// recipe_app
+// Postman
+// MongoDb
+// http://localhost:3000/api-docs/#/
+// https://app.swaggerhub.com/apis/awayfromkeyboard/swagger-workout-tracker/1.0.0
 const db = require('./db-init');
 
 const createError = require('http-errors'),
