@@ -7,7 +7,9 @@
 // MongoDb
 // http://localhost:3000/api-docs/#/
 // https://app.swaggerhub.com/apis/awayfromkeyboard/swagger-workout-tracker/1.0.0
-// url/{userid} IKKE url/{username}
+
+// TODO: updateUser, så den kun opdaterer NOGLE af parametrene, og ikke dem alle.
+
 const db = require('./db-init');
 
 const express = require('express'),
