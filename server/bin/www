@@ -87,6 +87,6 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
-  console.log('Your server is listening on port %d (http://localhost:%d)', addr.port, addr.port);
-  console.log('Swagger-ui is available on http://localhost:%d/docs', addr.port);
+  console.log('Your server is listening on port %d (http://localhost:%d/api/v1/)', addr.port, addr.port);
+  console.log('Swagger-ui is available on http://localhost:%d/api-docs', addr.port);
 }

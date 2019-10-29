@@ -27,8 +27,12 @@ const logger = require('morgan'),
   cookieParser = require('cookie-parser'),
 
   app = express(),
-  swaggerUi = require('swagger-ui-express'),
-  swaggerDocument = require('./api/wtapi.json');
+  swaggerUi = require('swagger-ui-express');
+const swaggerOptions = {
+  swaggerOptions: {
+    url: 'https://api.swaggerhub.com/apis/awayfromkeyboard/swagger-workout-tracker/1.0.1/swagger.json'
+  }
+}
 
 // APP.USE
 app.use(function(req, res, next) {
@@ -46,13 +50,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-app.use("/api/v1", router);
-
 // Router
-
-
-router.use('/api-docs', swaggerUi.serve);
-router.use('/api-docs', swaggerUi.setup(swaggerDocument));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(null, swaggerOptions));
+app.use("/api/v1", router);
 
 module.exports = app;

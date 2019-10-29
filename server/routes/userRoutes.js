@@ -4,23 +4,29 @@ const router = express.Router(),
     passport = require('passport');
 require('../config/passport');
 
-// Create
+
+// Index
+router.post("/new", userController.createUser);
+
+// TODO: createWithArray
+
+router.post("/login", userController.login, userController.respondJSON);
+
 
 router.get("/", passport.authenticate('jwt', {session:false}), (req,res,next) => {
-    console.log("What");
     return res.status(200).json({
         message: "You've reached the API",
     });
 })
-// Login and authentication
-router.post("/login", userController.login);
-// Index
-router.post("/", userController.create);
 
+router.post("/:username/logout", passport.authenticate('jwt', {session: false}),
+    userController.logoutUser, userController.respondJSON);
 router.get("/:username", passport.authenticate('jwt', {session: false}), 
-    userController.show, userController.respondJSON)
-// CRUD
-
+    userController.getUser, userController.respondJSON)
+router.put("/:username", passport.authenticate('jwt', {session: false}),
+    userController.updateUser, userController.respondJSON);
+router.delete("/:username", passport.authenticate('jwt', {session: false}),
+    userController.deleteUser, userController.respondJSON);
 
 router.use(userController.errorJSON);
 

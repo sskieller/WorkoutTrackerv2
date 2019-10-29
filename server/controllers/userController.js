@@ -18,14 +18,15 @@ const getUserParams = (body) => {
 };
 
 module.exports = {
-    create: (req, res, next) => {
+    createUser: (req, res, next) => {
         if (req.skip) next();
-
+        console.log(req.body);
         let newUser = new User(getUserParams(req.body));
 
         User.register(newUser, req.body.password, (error, user) => {
             if (error) {
-                console.log(error);
+                console.log(`User: ${user}`)
+                console.log(`Error: ${error}`);
                 res.statusCode = 500;
                 return res.json({
                     errors: ['Failed to create new user']
@@ -45,7 +46,7 @@ module.exports = {
         })
 
     },
-
+    
     login: (req, res, next) => {
         passport.authenticate('local', (err, user, info) => {
             console.log(user.firstName);
@@ -70,13 +71,25 @@ module.exports = {
         })(req,res,next);
     },
 
-    show: (req, res, next) => {
+    logoutUser: (req,res,next) => {
+        console.log("NOT IMPLEMENTED");
+    },
+
+    getUser: (req, res, next) => {
         let userId = req.params.id;
         User.findById(userId)
             .then(user => {
                 res.locals.user = user;
                 next();
             })
+    },
+
+    updateUser: (req,res,next) => {
+        console.log("NOT IMPLEMENTED");
+    },
+
+    deleteUser: (req,res,next) => {
+        console.log("NOT IMPLEMENTED");
     },
 
     respondJSON: (req, res) => {
