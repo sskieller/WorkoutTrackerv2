@@ -6,26 +6,17 @@ require('../config/passport');
 
 
 // Index
-router.post("/new", userController.createUser);
-
+router.post("/new", userController.createUser, userController.respondJSON, userController.errorJSON);
 // TODO: createWithArray
+router.post("/login", userController.loginUser, userController.respondJSON);
 
-router.post("/login", userController.login, userController.respondJSON);
-
-
-router.get("/", passport.authenticate('jwt', {session:false}), (req,res,next) => {
-    return res.status(200).json({
-        message: "You've reached the API",
-    });
-})
-
-router.post("/:username/logout", passport.authenticate('jwt', {session: false}),
+router.post("/:username/logout", userController.verifyJWT, passport.authenticate('jwt', {session: false}),
     userController.logoutUser, userController.respondJSON);
-router.get("/:username", passport.authenticate('jwt', {session: false}), 
-    userController.getUser, userController.respondJSON)
-router.put("/:username", passport.authenticate('jwt', {session: false}),
+router.get("/:username", userController.verifyJWT, passport.authenticate('jwt', {session: false}), 
+    userController.getUserByName, userController.respondJSON)
+router.put("/:username", userController.verifyJWT, passport.authenticate('jwt', {session: false}),
     userController.updateUser, userController.respondJSON);
-router.delete("/:username", passport.authenticate('jwt', {session: false}),
+router.delete("/:username", userController.verifyJWT, passport.authenticate('jwt', {session: false}),
     userController.deleteUser, userController.respondJSON);
 
 router.use(userController.errorJSON);

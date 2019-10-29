@@ -25,16 +25,12 @@ module.exports = {
 
         User.register(newUser, req.body.password, (error, user) => {
             if (error) {
-                console.log(`User: ${user}`)
-                console.log(`Error: ${error}`);
                 res.statusCode = 500;
                 return res.json({
                     errors: ['Failed to create new user']
                 })
             }
-
             if (!user) {
-                console.log(error);
                 res.statusCode = 500;
                 return res.json({
                     errors: ['Failed to retrieve user after creation']
@@ -44,12 +40,11 @@ module.exports = {
             res.statusCode = 201;
             res.json(user);
         })
-
     },
-    
-    login: (req, res, next) => {
+    // TODO: Create User via Array
+    loginUser: (req, res, next) => {
         passport.authenticate('local', (err, user, info) => {
-            console.log(user.firstName);
+            console.log(`User logged in: ${user.name.firstName} ${user.name.lastName}`);
             if (user) {
                 let signedToken = jwt.sign(
                     {
@@ -75,7 +70,7 @@ module.exports = {
         console.log("NOT IMPLEMENTED");
     },
 
-    getUser: (req, res, next) => {
+    getUserByName: (req, res, next) => {
         let userId = req.params.id;
         User.findById(userId)
             .then(user => {
@@ -92,6 +87,7 @@ module.exports = {
         console.log("NOT IMPLEMENTED");
     },
 
+    // HELPER FUNCTIONS
     respondJSON: (req, res) => {
         res.json({
             status: httpStatus.OK,
@@ -113,4 +109,38 @@ module.exports = {
         }
         res.json(errorObject);
     },
+
+    verifyJWT: (req,res,next) => {
+        let token = req.headers.token; // Retrieve JWT token from header
+        if (token) {
+            jwt.verify( // Verify JWT and decode payload
+                token, process.env.JWT_SECRET,
+                (errors, payload) => {
+                    if (payload) {
+                        User.findById(payload.data).then(user => { // Check for a user with user ID from JWT payload
+                            if (user) {
+                                next(); // Call next middleware function if user found
+                            } else {
+                                res.status(httpStatus.FORBIDDEN).json({
+                                    error: true,
+                                    message: "No User account found."
+                                });
+                            }
+                        });
+                    } else {
+                        res.status(httpStatus.UNAUTHORIZED).json({
+                            error: true,
+                            message: "Cannot verify API token." // Respond with error if token not verified
+                        });
+                        next();
+                    }
+                }
+            );
+        } else {
+            res.status(httpStatus.UNAUTHORIZED).json({
+                error: true,
+                message: "Provide token" // Respond with error if token not found in header
+            });
+        }
+    }
 };
