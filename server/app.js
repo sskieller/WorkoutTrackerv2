@@ -7,6 +7,7 @@
 // MongoDb
 // http://localhost:3000/api-docs/#/
 // https://app.swaggerhub.com/apis/awayfromkeyboard/swagger-workout-tracker/1.0.0
+// url/{userid} IKKE url/{username}
 const db = require('./db-init');
 
 const express = require('express'),
@@ -15,6 +16,8 @@ const express = require('express'),
   passport = require('passport');
 router.use(passport.initialize());
 router.use(passport.session());
+
+require('dotenv').config();
 
 const User = require('./models/user');
 passport.use(User.createStrategy());

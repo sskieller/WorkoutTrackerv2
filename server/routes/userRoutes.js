@@ -10,14 +10,22 @@ router.post("/new", userController.createUser, userController.respondJSON, userC
 // TODO: createWithArray
 router.post("/login", userController.loginUser, userController.respondJSON);
 
-router.post("/:username/logout", userController.verifyJWT, passport.authenticate('jwt', {session: false}),
-    userController.logoutUser, userController.respondJSON);
-router.get("/:username", userController.verifyJWT, passport.authenticate('jwt', {session: false}), 
-    userController.getUserByName, userController.respondJSON)
-router.put("/:username", userController.verifyJWT, passport.authenticate('jwt', {session: false}),
-    userController.updateUser, userController.respondJSON);
-router.delete("/:username", userController.verifyJWT, passport.authenticate('jwt', {session: false}),
-    userController.deleteUser, userController.respondJSON);
+router.post("/:userId/logout"
+    ,userController.verifyJWT
+    ,userController.logoutUser
+    ,userController.respondJSON);
+router.get("/:userId"
+    ,userController.verifyJWT
+    ,userController.getUserByName
+    ,userController.respondJSON);
+router.put("/:userId"
+    ,userController.verifyJWT
+    ,userController.updateUser
+    ,userController.respondJSON);
+router.delete("/:userId"
+    ,userController.verifyJWT
+    ,userController.deleteUser
+    ,userController.respondJSON);
 
 router.use(userController.errorJSON);
 
