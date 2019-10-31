@@ -8,6 +8,11 @@
 // http://localhost:3000/api-docs/#/
 // https://app.swaggerhub.com/apis/awayfromkeyboard/swagger-workout-tracker/1.0.0
 
+// https://stackoverflow.com/questions/42887387/partially-updating-nested-objects-with-multiple-values-express-js-mongodb
+// https://stackoverflow.com/questions/10290621/how-do-i-partially-update-an-object-in-mongodb-so-the-new-object-will-overlay
+// https://stackoverflow.com/questions/38189928/how-do-i-partially-update-an-array-inside-and-object-in-mongodb-so-the-new-value
+// https://stackoverflow.com/questions/54527094/update-element-in-array-of-mongoose-schema
+// https://stackoverflow.com/questions/10708109/modifying-the-last-element-of-an-array-in-mongodb
 // TODO: updateUser, så den kun opdaterer NOGLE af parametrene, og ikke dem alle.
 
 const db = require('./db-init');

@@ -5,7 +5,7 @@ const httpStatus = require('http-status-codes'),
 require('../config/passport');
 
 const getUserParams = (body) => {
-    console.log("Body for request printed: ");
+    console.log("getUserParams: ");
     console.log(body);
     return {
         username: body.username,
@@ -89,10 +89,21 @@ module.exports = {
     // TODO: STATUS CODES
     updateUser: (req, res, next) => {
         let userId = req.params.userId;
-        let user = getUserParams(req.body);
-        User.findByIdAndUpdate(userId, {$set:user}, {upsert: true, new: true})
-            .then(user => {
-                res.locals.user = user;
+        let updateUser = getUserParams(req.body);
+        
+        const removeEmptyStrings = (obj) => {
+            let newObj = {};
+            Object.keys(obj).forEach((prop) => {
+              if (obj[prop] !== null || obj[prop] !==undefined) { newObj[prop] = obj[prop]; }
+            });
+            return newObj;
+          };
+
+        console.log(`removed: ${removeEmptyStrings(updateUser)}`);
+
+        User.findByIdAndUpdate(userId, { $set: updateUser }, {upsert: false, new: true})
+            .then(newUser => {
+                res.locals.user = newUser;
                 next();
             })
     },
@@ -158,5 +169,29 @@ module.exports = {
                 message: "Provide token" // Respond with error if token not found in header
             });
         }
-    }
+    },
+
+    cleanObject: (obj) => {
+        console.log("WHATTHEFUCLK")
+        var propNames = Object.getOwnPropertyNames(obj);
+        console.log(propNames)
+        for (var i = 0; i < propNames.length; i++) {
+            var propName = propNames[i];
+            console.log(propName);
+            console.log(obj[propName]);
+            if (obj[propName] === null) {
+                delete obj[propName];
+            }
+        }
+    },
+
+    delet: (obj) => { 
+        for (var prop in obj) { 
+            if (obj[prop] === null || obj[prop] === undefined) { 
+                delete obj[prop]; 
+            } 
+        }
+        next();
+    } 
+
 };
