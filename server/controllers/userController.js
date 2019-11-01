@@ -11,11 +11,34 @@ const getUserParams = (body) => {
         username: body.username,
         password: body.password,
         name: {
-            firstName: body.firstName,
-            lastName: body.lastName
+            firstName: body.name.firstName,
+            lastName: body.name.lastName
         }
     };
 };
+const getNonNullUserParams = (body) => {
+    // Check if body contains and create object thereafter
+    let nonNullUser = {};
+    if (body.username)
+    Object.assign(nonNullUser, {username: body.username}) 
+    if (body.password) 
+        Object.assign(nonNullUser, {password: body.password})
+
+    if (body.name.firstName && body.name.lastName)
+        Object.assign(nonNullUser, {name: { firstName: body.name.firstName, lastName: body.name.lastName}})
+    else if (body.name.firstName) 
+        Object.assign(nonNullUser, {name: { firstName: body.name.firstName}})
+    else if (body.name.lastName)
+        Object.assign(nonNullUser, {name: { lastName: body.name.lastName}})
+
+    if (body.workoutPrograms)
+        Object.assign(nonNullUser, {workoutPrograms: body.workoutPrograms})
+
+    if (body.workoutActivities)
+        Object.assign(nonNullUser, {workoutActivities: body.workoutActivities})
+
+    return nonNullUser;
+}
 
 module.exports = {
     createUser: (req, res, next) => {
@@ -41,7 +64,7 @@ module.exports = {
             res.json(user);
         })
     },
-    // TODO: Create User via Array
+    // TODO: NEW FUNCTION: Create User via Array
     loginUser: (req, res, next) => {
         passport.authenticate('local', (err, user, info) => {
             console.log(`User logged in: ${user.name.firstName} ${user.name.lastName}`);
@@ -49,9 +72,10 @@ module.exports = {
                 let signedToken = jwt.sign(
                     {
                         data: user._id,
-                        exp: new Date().setDate(new Date().getDate() + 1)
+                        //exp: new Date().setDate(new Date().getDate() + 1)
                     },
-                    process.env.JWT_SECRET
+                    process.env.JWT_SECRET,
+                    {expiresIn: '1d'}
                 );
                 res.json({
                     success: true,
@@ -67,13 +91,18 @@ module.exports = {
         })(req, res, next);
     },
 
+    // TODO: Status codes
     logoutUser: (req, res, next) => {
-        if (req) {
-            console.log("NOT IMPLEMENTED");
-            res.json({
-                success: true
-            })
+        let token = req.headers.token; // Retrieve JWT token from header
+        if (token) {
+            console.log(token);
         }
+        // if (token) {
+        //     jwt.verify(token, process.env.JWT_SECRET, (errors, payload) => {
+        //         console.log(payload.user.lastLoggedOut);
+                
+        //     });
+        // }
     },
 
     // TODO: STATUS CODES
@@ -87,21 +116,13 @@ module.exports = {
     },
 
     // TODO: STATUS CODES
+    // Updates only user information. To update arrays, i.e. workoutPrograms or workoutActivities
+    // go to the proper controllers
     updateUser: (req, res, next) => {
         let userId = req.params.userId;
-        let updateUser = getUserParams(req.body);
-        
-        const removeEmptyStrings = (obj) => {
-            let newObj = {};
-            Object.keys(obj).forEach((prop) => {
-              if (obj[prop] !== null || obj[prop] !==undefined) { newObj[prop] = obj[prop]; }
-            });
-            return newObj;
-          };
+        let nonNullUser = getNonNullUserParams(req.body);
 
-        console.log(`removed: ${removeEmptyStrings(updateUser)}`);
-
-        User.findByIdAndUpdate(userId, { $set: updateUser }, {upsert: false, new: true})
+        User.findByIdAndUpdate(userId, { $set: nonNullUser }, {upsert: false, new: true})
             .then(newUser => {
                 res.locals.user = newUser;
                 next();
@@ -170,28 +191,4 @@ module.exports = {
             });
         }
     },
-
-    cleanObject: (obj) => {
-        console.log("WHATTHEFUCLK")
-        var propNames = Object.getOwnPropertyNames(obj);
-        console.log(propNames)
-        for (var i = 0; i < propNames.length; i++) {
-            var propName = propNames[i];
-            console.log(propName);
-            console.log(obj[propName]);
-            if (obj[propName] === null) {
-                delete obj[propName];
-            }
-        }
-    },
-
-    delet: (obj) => { 
-        for (var prop in obj) { 
-            if (obj[prop] === null || obj[prop] === undefined) { 
-                delete obj[prop]; 
-            } 
-        }
-        next();
-    } 
-
 };

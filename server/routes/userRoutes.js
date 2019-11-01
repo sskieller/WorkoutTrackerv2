@@ -10,7 +10,7 @@ router.post("/new", userController.createUser, userController.respondJSON, userC
 // TODO: createWithArray
 router.post("/login", userController.loginUser, userController.respondJSON);
 
-router.post("/:userId/logout"
+router.get("/:userId/logout"
     ,userController.verifyJWT
     ,userController.logoutUser
     ,userController.respondJSON);
