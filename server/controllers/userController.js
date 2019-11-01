@@ -4,6 +4,13 @@ const httpStatus = require('http-status-codes'),
     passport = require('passport');
 require('../config/passport');
 
+const redis = require('redis');
+const JWTR = require('jwt-redis').default;
+const redisClient = redis.createClient();
+console.log(`Redis initialized at port: 6379`);
+const jwtr = new JWTR(redisClient);
+
+
 const getUserParams = (body) => {
     console.log("getUserParams: ");
     console.log(body);
@@ -20,22 +27,22 @@ const getNonNullUserParams = (body) => {
     // Check if body contains and create object thereafter
     let nonNullUser = {};
     if (body.username)
-    Object.assign(nonNullUser, {username: body.username}) 
-    if (body.password) 
-        Object.assign(nonNullUser, {password: body.password})
+        Object.assign(nonNullUser, { username: body.username })
+    if (body.password)
+        Object.assign(nonNullUser, { password: body.password })
 
     if (body.name.firstName && body.name.lastName)
-        Object.assign(nonNullUser, {name: { firstName: body.name.firstName, lastName: body.name.lastName}})
-    else if (body.name.firstName) 
-        Object.assign(nonNullUser, {name: { firstName: body.name.firstName}})
+        Object.assign(nonNullUser, { name: { firstName: body.name.firstName, lastName: body.name.lastName } })
+    else if (body.name.firstName)
+        Object.assign(nonNullUser, { name: { firstName: body.name.firstName } })
     else if (body.name.lastName)
-        Object.assign(nonNullUser, {name: { lastName: body.name.lastName}})
+        Object.assign(nonNullUser, { name: { lastName: body.name.lastName } })
 
     if (body.workoutPrograms)
-        Object.assign(nonNullUser, {workoutPrograms: body.workoutPrograms})
+        Object.assign(nonNullUser, { workoutPrograms: body.workoutPrograms })
 
     if (body.workoutActivities)
-        Object.assign(nonNullUser, {workoutActivities: body.workoutActivities})
+        Object.assign(nonNullUser, { workoutActivities: body.workoutActivities })
 
     return nonNullUser;
 }
@@ -66,16 +73,14 @@ module.exports = {
     },
     // TODO: NEW FUNCTION: Create User via Array
     loginUser: (req, res, next) => {
-        passport.authenticate('local', (err, user, info) => {
+        passport.authenticate('local', async (err, user, info) => {
             console.log(`User logged in: ${user.name.firstName} ${user.name.lastName}`);
             if (user) {
-                let signedToken = jwt.sign(
-                    {
-                        data: user._id,
-                        //exp: new Date().setDate(new Date().getDate() + 1)
-                    },
+                let pl = { data: user._id }
+                let signedToken = await jwtr.sign(
+                    pl,
                     process.env.JWT_SECRET,
-                    {expiresIn: '1d'}
+                    { expiresIn: '1d' }
                 );
                 res.json({
                     success: true,
@@ -93,16 +98,13 @@ module.exports = {
 
     // TODO: Status codes
     logoutUser: (req, res, next) => {
+        console.log("LOGOUT REACHED")
         let token = req.headers.token; // Retrieve JWT token from header
         if (token) {
-            console.log(token);
+            console.log("Token found");
         }
-        // if (token) {
-        //     jwt.verify(token, process.env.JWT_SECRET, (errors, payload) => {
-        //         console.log(payload.user.lastLoggedOut);
-                
-        //     });
-        // }
+        jwtr.destroy(token);
+        next();
     },
 
     // TODO: STATUS CODES
@@ -122,7 +124,7 @@ module.exports = {
         let userId = req.params.userId;
         let nonNullUser = getNonNullUserParams(req.body);
 
-        User.findByIdAndUpdate(userId, { $set: nonNullUser }, {upsert: false, new: true})
+        User.findByIdAndUpdate(userId, { $set: nonNullUser }, { upsert: false, new: true })
             .then(newUser => {
                 res.locals.user = newUser;
                 next();
@@ -140,12 +142,14 @@ module.exports = {
 
     // HELPER FUNCTIONS
     respondJSON: (req, res) => {
+        console.log("RESPONDJSON REACHED")
         res.json({
             status: httpStatus.OK,
             data: res.locals
         });
     },
     errorJSON: (error, req, res, next) => {
+        console.log("ERRORJSON REACHED")
         let errorObject;
         if (error) {
             errorObject = {
@@ -160,14 +164,17 @@ module.exports = {
         }
         res.json(errorObject);
     },
-
+    // https://github.com/azuqua/jwt-redis-session
     verifyJWT: (req, res, next) => {
         let token = req.headers.token; // Retrieve JWT token from header
         if (token) {
-            jwt.verify(token, process.env.JWT_SECRET, (errors, payload) => { // Verify JWT and decode payload
+            console.log("verifying1")
+            jwtr.verify(token, process.env.JWT_SECRET).then(payload => {
                 if (payload) {
+                    console.log("verifying2")
                     User.findById(payload.data).then(user => { // Check for a user with user ID from JWT payload
                         if (user) {
+                            console.log("verifying3")
                             next(); // Call next middleware function if user found
                         } else {
                             res.status(httpStatus.FORBIDDEN).json({
@@ -176,19 +183,47 @@ module.exports = {
                             });
                         }
                     });
-                } else {
-                    res.status(httpStatus.UNAUTHORIZED).json({
-                        error: true,
-                        message: "Cannot verify API token." // Respond with error if token not verified
-                    });
-                    next();
                 }
-            });
-        } else {
-            res.status(httpStatus.UNAUTHORIZED).json({
-                error: true,
-                message: "Provide token" // Respond with error if token not found in header
-            });
+            }).catch(errors => {
+                res.status(httpStatus.UNAUTHORIZED).json({
+                    error: true,
+                    message: "Cannot verify API token." // Respond with error if token not verified
+                });
+                next();
+            })
         }
+        // jwtr.verify(token, process.env.JWT_SECRET, (errors, payload) => { // Verify JWT and decode payload
+        //     console.log("verifying1.5")
+        //     if (payload) {
+        //         console.log("verifying2")
+        //         User.findById(payload.data).then(user => { // Check for a user with user ID from JWT payload
+        //             if (user) {
+        //                 console.log("verifying3")
+        //                 next(); // Call next middleware function if user found
+        //             } else {
+        //                 console.log("verifying4")
+        //                 res.status(httpStatus.FORBIDDEN).json({
+        //                     error: true,
+        //                     message: "No User account found."
+        //                 });
+        //             }
+        //         });
+        //     } else {
+        //         console.log("verifying5")
+        //         res.status(httpStatus.UNAUTHORIZED).json({
+        //             error: true,
+        //             message: "Cannot verify API token." // Respond with error if token not verified
+        //         });
+        //         console.log("verifying6")
+        //         next();
+        //     }
+        // });
+        // } else {
+        //     console.log("verifying7")
+        //     res.status(httpStatus.UNAUTHORIZED).json({
+        //         error: true,
+        //         message: "Provide token" // Respond with error if token not found in header
+        //     });
+        // }
     },
 };

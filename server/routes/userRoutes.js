@@ -6,14 +6,20 @@ require('../config/passport');
 
 
 // Index
-router.post("/new", userController.createUser, userController.respondJSON, userController.errorJSON);
+router.post("/new"
+    ,userController.createUser
+    ,userController.respondJSON
+    ,userController.errorJSON);
 // TODO: createWithArray
-router.post("/login", userController.loginUser, userController.respondJSON);
-
+router.post("/login"
+    ,userController.loginUser
+    ,userController.respondJSON
+    ,userController.errorJSON);
 router.get("/:userId/logout"
     ,userController.verifyJWT
     ,userController.logoutUser
-    ,userController.respondJSON);
+    ,userController.respondJSON
+    ,userController.errorJSON);
 router.get("/:userId"
     ,userController.verifyJWT
     ,userController.getUserByName
