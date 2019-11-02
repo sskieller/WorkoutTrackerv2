@@ -43,46 +43,42 @@ module.exports = {
             if (err) {
                 console.log("FAILED TO CREATE WORKOUT PROGRAM");
                 res.statusCode = 500;
-                res.json({
+                return res.json({
                     errors: ['Failed to create new workout Program']
                 });
-                next();
             }
             if (!workoutProgram) {
                 res.statusCode = 500;
-                res.json({
+                return res.json({
                     errors: ['Failed to retrieve workout Program after creation']
                 });
-                next();
             }
-
-            console.log(workoutProgram._id)
+            console.log("WORKOUTPROGRAM._ID");
+            console.log(workoutProgram._id);
             User.findByIdAndUpdate(userId, { $push: { workoutPrograms: workoutProgram._id } },
                 (err, user) => {
                     if (err) {
                         console.log("FAILED TO UPDATE USER");
                         res.statusCode = 500;
                         WorkoutProgram.findByIdAndDelete(workoutProgram._id);
-                        res.json({
+                        return res.json({
                             errors: ['Failed to update user with new workout Program Id']
                         });
-                        next();
                     }
+                    console.log("USER:");
                     console.log(user);
                     if (!user) {
                         res.statusCode = 500;
-                        res.json({
+                        return res.json({
                             errors: ['Failed to retrieve user after update']
                         });
-                        next();
                     }
 
                     console.log("CREATED NEW WORKOUT PROGRAM");
                     res.statusCode = 201;
                     res.json(workoutProgram);
                 });
-        })
-            .catch(WorkoutProgram.findByIdAndDelete(workoutProgram._id));
+        });
     },
 
     getWorkoutProgramById: (req, res, next) => {
