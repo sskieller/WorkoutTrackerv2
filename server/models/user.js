@@ -1,5 +1,5 @@
 const mongoose = require('mongoose'),
-    {Schema} = mongoose,
+    { Schema } = mongoose,
     WorkoutProgram = require('./workoutProgram'),
     passportLocalMongoose = require('passport-local-mongoose'),
 
@@ -8,7 +8,7 @@ const mongoose = require('mongoose'),
         {
             username: {
                 type: String,
-                required:true,
+                required: true,
                 trim: true,
             },
             password: {
@@ -26,14 +26,14 @@ const mongoose = require('mongoose'),
                     trim: true,
                 }
             },
-            workoutPrograms: [{type: Schema.Types.ObjectId, ref: "workoutProgram"}],
-            workoutActivities: [{type: Schema.Types.ObjectId, ref: "workoutActivity"}]
+            workoutPrograms: [{ type: Schema.Types.ObjectId, ref: "WorkoutProgram" }],
+            workoutActivities: [{ type: Schema.Types.ObjectId, ref: "WorkoutActivity" }]
         },
         {
             timestamps: true,
         }
     );
 
-    userSchema.plugin(passportLocalMongoose);
+userSchema.plugin(passportLocalMongoose);
 
-    module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema);

@@ -3,44 +3,29 @@ const User = require('../models/user');
 const httpStatus = require('http-status-codes'),
     passport = require('passport');
 require('../config/passport');
-
-const getUserParams = (body) => {
-    console.log("getUserParams: ");
-    console.log(body);
-    return {
-        username: body.username,
-        password: body.password,
-        name: {
-            firstName: body.name.firstName,
-            lastName: body.name.lastName
-        }
-    };
-};
-const getNonNullUserParams = (body) => {
-    // Check if body contains and create object thereafter
-    let nonNullUser = {};
-    if (body.username)
-        Object.assign(nonNullUser, { username: body.username })
-    if (body.password)
-        Object.assign(nonNullUser, { password: body.password })
-
-    if (body.name.firstName && body.name.lastName)
-        Object.assign(nonNullUser, { name: { firstName: body.name.firstName, lastName: body.name.lastName } })
-    else if (body.name.firstName)
-        Object.assign(nonNullUser, { name: { firstName: body.name.firstName } })
-    else if (body.name.lastName)
-        Object.assign(nonNullUser, { name: { lastName: body.name.lastName } })
-
-    if (body.workoutPrograms)
-        Object.assign(nonNullUser, { workoutPrograms: body.workoutPrograms })
-
-    if (body.workoutActivities)
-        Object.assign(nonNullUser, { workoutActivities: body.workoutActivities })
-
-    return nonNullUser;
-}
+// TODO: Status codes
 
 module.exports = {
+    // Updates only user information. 
+    // To update arrays, i.e. workoutPrograms or workoutActivities go to the proper controllers
+    updateUser: (req, res, next) => {
+        let userId = req.params.userId;
+        User.findById(userId, (err, user) => {
+            if (!err) {
+                let newDataUser = getNonNullUserParams(req.body, user);
+                user.save((err, newDataUser) => {
+                    if (err) {
+                        console.log(err);
+                        return;
+                    }
+                    console.log("User saved: " + newDataUser);
+                });
+                res.locals.user = newDataUser;
+                next();
+            }
+        })
+    },
+
     createUser: (req, res, next) => {
         if (req.skip) next();
         console.log(req.body);
@@ -64,7 +49,17 @@ module.exports = {
             res.json(user);
         })
     },
-    // TODO: NEW FUNCTION: Create User via Array
+
+    createUsersWithArrayInput: (req,res,next) => {
+        if (req) {
+            console.log("NOT IMPLEMENTED");
+        }
+        res.json({
+            success: false,
+            error: "NOT IMPLEMENTED"
+        });
+    },
+
     loginUser: (req, res, next) => {
         passport.authenticate('local', (err, user, info) => {
             console.log(`User logged in: ${user.name.firstName} ${user.name.lastName}`);
@@ -89,7 +84,6 @@ module.exports = {
         })(req, res, next);
     },
 
-    // TODO: Status codes
     logoutUser: (req, res, next) => {
         let token = req.headers.token; // Retrieve JWT token from header
         if (token) {
@@ -124,100 +118,51 @@ module.exports = {
         }
     },
 
-    // TODO: STATUS CODES
     getUserByName: (req, res, next) => {
-        try {
-            if (req) {
-                let userId = req.params.userId;
-                User.findById(userId)
-                    .then(user => {
-                        res.locals.user = user;
-                        next();
-                    })
-            }
-        } catch (error) {
-
+        if (req) {
+            let userId = req.params.userId;
+            User.findById(userId)
+                .then(user => {
+                    res.locals.user = user;
+                    next();
+                });
         }
-    },
-
-    // TODO: STATUS CODES
-    // Updates only user information. To update arrays, i.e. workoutPrograms or workoutActivities
-    // go to the proper controllers
-    updateUser: (req, res, next) => {
-        let userId = req.params.userId;
-        let nonNullUser = getNonNullUserParams(req.body);
-
-        User.findByIdAndUpdate(userId, { $set: nonNullUser }, { upsert: false, new: true })
-            .then(newUser => {
-                res.locals.user = newUser;
-                next();
-            })
     },
 
     deleteUser: (req, res, next) => {
         if (req) {
-            console.log("NOT IMPLEMENTED");
-            res.json({
-                success: true
-            })
-        }
-    },
-
-    // HELPER FUNCTIONS
-    respondJSON: (req, res) => {
-        console.log("RESPONDJSON REACHED")
-        res.json({
-            status: httpStatus.OK,
-            data: res.locals
-        });
-    },
-    errorJSON: (error, req, res, next) => {
-        console.log("ERRORJSON REACHED")
-        let errorObject;
-        if (error) {
-            errorObject = {
-                status: httpStatus.INTERNAL_SERVER_ERROR,
-                message: error.message
-            };
-            res.json(errorObject);
-        } else {
-            errorObject = {
-                status: httpStatus.OK,
-                message: "Unknown Error."
-            };
-            res.json(errorObject);
-        }
-    },
-
-    // TODO: DELETE jwt FROM CLIENT, INSTEAD OF FROM SERVER (WRITE IN CONCLUSION ABOUT IT)
-    verifyJWT: (req, res, next) => {
-        let token = req.headers.token; // Retrieve JWT token from header
-        if (token) {
-            jwt.verify(token, process.env.JWT_SECRET, (errors, payload) => { // Verify JWT and decode payload
-                if (payload) {
-                    User.findById(payload.data).then(user => { // Check for a user with user ID from JWT payload
-                        if (user) {
-                            next(); // Call next middleware function if user found
-                        } else {
-                            res.status(httpStatus.FORBIDDEN).json({
-                                error: true,
-                                message: "No User account found."
-                            });
-                        }
+            let userId = req.params.userId;
+            User.findByIdAndDelete(userId, (err) => {
+                if (err) {
+                    res.json({
+                        success: false
                     });
                 } else {
-                    res.status(httpStatus.UNAUTHORIZED).json({
-                        error: true,
-                        message: "Cannot verify API token." // Respond with error if token not verified
+                    res.json({
+                        success: true
                     });
-                    //next(); // Allows a ton of "cannot set header after sent"-errors if activated
                 }
             });
-        } else {
-            res.status(httpStatus.UNAUTHORIZED).json({
-                error: true,
-                message: "Provide token" // Respond with error if token not found in header
-            });
         }
-    }
+    },
 };
+
+const getUserParams = (body) => {
+    return {
+        username: body.username,
+        password: body.password,
+        name: {
+            firstName: body.name.firstName,
+            lastName: body.name.lastName
+        }
+    };
+};
+const getNonNullUserParams = (body, user) => {
+    // Check if body contains and create object thereafter
+    user.username = body.username ? body.username : user.username;
+    user.password = body.password ? body.password : user.password;
+    user.name.firstName = body.name.firstName ? body.name.firstName : user.name.firstName;
+    user.name.lastName = body.name.lastName ? body.name.lastName : user.name.lastName;
+
+    return user;
+}

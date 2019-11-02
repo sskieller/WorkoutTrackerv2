@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router(),
+    helperFunctions = require('../controllers/helperFunctions'),
     userController = require('../controllers/userController'),
     passport = require('passport'); // Needed
 require('../config/passport');
@@ -8,31 +9,37 @@ require('../config/passport');
 // Index
 router.post("/new"
     , userController.createUser
-    , userController.respondJSON
-    , userController.errorJSON);
-// TODO: createWithArray
+    , helperFunctions.respondJSON
+    , helperFunctions.errorJSON);
+router.post("/createWithArray"
+    , userController.createUsersWithArrayInput
+    , helperFunctions.respondJSON
+    , helperFunctions.errorJSON);
 router.post("/login"
     , userController.loginUser
-    , userController.respondJSON
-    , userController.errorJSON);
+    , helperFunctions.respondJSON
+    , helperFunctions.errorJSON);
 router.get("/:userId/logout"
-    , userController.verifyJWT
+    , helperFunctions.verifyJWT
     , userController.logoutUser
-    , userController.respondJSON
-    , userController.errorJSON);
+    , helperFunctions.respondJSON
+    , helperFunctions.errorJSON);
 router.get("/:userId"
-    , userController.verifyJWT
+    , helperFunctions.verifyJWT
     , userController.getUserByName
-    , userController.respondJSON);
+    , helperFunctions.respondJSON
+    , helperFunctions.errorJSON);
 router.put("/:userId"
-    , userController.verifyJWT
+    , helperFunctions.verifyJWT
     , userController.updateUser
-    , userController.respondJSON);
+    , helperFunctions.respondJSON
+    , helperFunctions.errorJSON);
 router.delete("/:userId"
-    , userController.verifyJWT
+    , helperFunctions.verifyJWT
     , userController.deleteUser
-    , userController.respondJSON);
+    , helperFunctions.respondJSON
+    , helperFunctions.errorJSON);
 
-router.use(userController.errorJSON);
+router.use(helperFunctions.errorJSON);
 
 module.exports = router;

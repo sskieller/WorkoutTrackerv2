@@ -27,11 +27,12 @@ passport.deserializeUser(User.deserializeUser());
 const logger = require('morgan'),
   path = require('path'),
   cookieParser = require('cookie-parser');
-  
+
+const swaggerAPIVersion = '1.1.0';
 const swaggerUi = require('swagger-ui-express'),
   swaggerOptions = {
   swaggerOptions: {
-    url: 'https://api.swaggerhub.com/apis/awayfromkeyboard/swagger-workout-tracker/1.0.1/swagger.json'
+    url: 'https://api.swaggerhub.com/apis/awayfromkeyboard/swagger-workout-tracker/'+swaggerAPIVersion+'/swagger.json'
   }
 }
 
@@ -53,7 +54,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Router
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(null, swaggerOptions));
-console.log("New API file loaded");
+console.log(`New API file loaded. Version: ${swaggerAPIVersion}`);
 app.use("/api/v1", router);
 
 module.exports = app;
