@@ -27,12 +27,7 @@ const mongoose = require('mongoose'),
                 }
             },
             workoutPrograms: [{type: Schema.Types.ObjectId, ref: "workoutProgram"}],
-            workoutActivities: [{type: Schema.Types.ObjectId, ref: "workoutActivity"}],
-
-            lastLoggedOut: {
-                type: String,
-                default: "0"
-            }
+            workoutActivities: [{type: Schema.Types.ObjectId, ref: "workoutActivity"}]
         },
         {
             timestamps: true,

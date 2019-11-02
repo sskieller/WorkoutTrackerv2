@@ -4,13 +4,6 @@ const httpStatus = require('http-status-codes'),
     passport = require('passport');
 require('../config/passport');
 
-const redis = require('redis');
-const JWTR = require('jwt-redis').default;
-const redisClient = redis.createClient();
-console.log(`Redis initialized at port: 6379`);
-const jwtr = new JWTR(redisClient);
-
-
 const getUserParams = (body) => {
     console.log("getUserParams: ");
     console.log(body);
@@ -73,12 +66,12 @@ module.exports = {
     },
     // TODO: NEW FUNCTION: Create User via Array
     loginUser: (req, res, next) => {
-        passport.authenticate('local', async (err, user, info) => {
+        passport.authenticate('local', (err, user, info) => {
             console.log(`User logged in: ${user.name.firstName} ${user.name.lastName}`);
             if (user) {
-                let pl = { data: user._id }
-                let signedToken = await jwtr.sign(
-                    pl,
+                let userId = { data: user._id }
+                let signedToken = jwt.sign(
+                    userId,
                     process.env.JWT_SECRET,
                     { expiresIn: '1d' }
                 );
@@ -98,23 +91,53 @@ module.exports = {
 
     // TODO: Status codes
     logoutUser: (req, res, next) => {
-        console.log("LOGOUT REACHED")
         let token = req.headers.token; // Retrieve JWT token from header
         if (token) {
-            console.log("Token found");
+            jwt.verify(token, process.env.JWT_SECRET, (errors, payload) => { // Verify JWT and decode payload
+                if (payload) {
+                    User.findById(payload.data).then(user => { // Check for a user with user ID from JWT payload
+                        if (user) {
+                            let userId = { data: user._id }
+                            let oldToken = token;
+                            let signedToken = jwt.sign(
+                                userId,
+                                process.env.JWT_SECRET + user.password,
+                                { expiresIn: '1d' }
+                            );
+                            console.log(oldToken);
+                            console.log(signedToken);
+                            res.json({
+                                success: true,
+                                token: signedToken,
+                                userId: user._id
+                            });
+                            //next(); // Call next middleware function if user found
+                        } else {
+                            res.status(httpStatus.FORBIDDEN).json({
+                                error: true,
+                                message: "No User account found."
+                            });
+                        }
+                    });
+                }
+            });
         }
-        jwtr.destroy(token);
-        next();
     },
 
     // TODO: STATUS CODES
     getUserByName: (req, res, next) => {
-        let userId = req.params.userId;
-        User.findById(userId)
-            .then(user => {
-                res.locals.user = user;
-                next();
-            })
+        try {
+            if (req) {
+                let userId = req.params.userId;
+                User.findById(userId)
+                    .then(user => {
+                        res.locals.user = user;
+                        next();
+                    })
+            }
+        } catch (error) {
+
+        }
     },
 
     // TODO: STATUS CODES
@@ -156,26 +179,24 @@ module.exports = {
                 status: httpStatus.INTERNAL_SERVER_ERROR,
                 message: error.message
             };
+            res.json(errorObject);
         } else {
             errorObject = {
                 status: httpStatus.OK,
                 message: "Unknown Error."
             };
+            res.json(errorObject);
         }
-        res.json(errorObject);
     },
-    // https://github.com/azuqua/jwt-redis-session
+
     // TODO: DELETE jwt FROM CLIENT, INSTEAD OF FROM SERVER (WRITE IN CONCLUSION ABOUT IT)
     verifyJWT: (req, res, next) => {
         let token = req.headers.token; // Retrieve JWT token from header
         if (token) {
-            console.log("verifying1")
-            jwtr.verify(token, process.env.JWT_SECRET).then(payload => {
+            jwt.verify(token, process.env.JWT_SECRET, (errors, payload) => { // Verify JWT and decode payload
                 if (payload) {
-                    console.log("verifying2")
                     User.findById(payload.data).then(user => { // Check for a user with user ID from JWT payload
                         if (user) {
-                            console.log("verifying3")
                             next(); // Call next middleware function if user found
                         } else {
                             res.status(httpStatus.FORBIDDEN).json({
@@ -184,47 +205,19 @@ module.exports = {
                             });
                         }
                     });
+                } else {
+                    res.status(httpStatus.UNAUTHORIZED).json({
+                        error: true,
+                        message: "Cannot verify API token." // Respond with error if token not verified
+                    });
+                    //next(); // Allows a ton of "cannot set header after sent"-errors if activated
                 }
-            }).catch(errors => {
-                res.status(httpStatus.UNAUTHORIZED).json({
-                    error: true,
-                    message: "Cannot verify API token." // Respond with error if token not verified
-                });
-                next();
-            })
+            });
+        } else {
+            res.status(httpStatus.UNAUTHORIZED).json({
+                error: true,
+                message: "Provide token" // Respond with error if token not found in header
+            });
         }
-        // jwtr.verify(token, process.env.JWT_SECRET, (errors, payload) => { // Verify JWT and decode payload
-        //     console.log("verifying1.5")
-        //     if (payload) {
-        //         console.log("verifying2")
-        //         User.findById(payload.data).then(user => { // Check for a user with user ID from JWT payload
-        //             if (user) {
-        //                 console.log("verifying3")
-        //                 next(); // Call next middleware function if user found
-        //             } else {
-        //                 console.log("verifying4")
-        //                 res.status(httpStatus.FORBIDDEN).json({
-        //                     error: true,
-        //                     message: "No User account found."
-        //                 });
-        //             }
-        //         });
-        //     } else {
-        //         console.log("verifying5")
-        //         res.status(httpStatus.UNAUTHORIZED).json({
-        //             error: true,
-        //             message: "Cannot verify API token." // Respond with error if token not verified
-        //         });
-        //         console.log("verifying6")
-        //         next();
-        //     }
-        // });
-        // } else {
-        //     console.log("verifying7")
-        //     res.status(httpStatus.UNAUTHORIZED).json({
-        //         error: true,
-        //         message: "Provide token" // Respond with error if token not found in header
-        //     });
-        // }
-    },
+    }
 };

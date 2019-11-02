@@ -1,37 +1,37 @@
 const express = require('express');
 const router = express.Router(),
     userController = require('../controllers/userController'),
-    passport = require('passport');
+    passport = require('passport'); // Needed
 require('../config/passport');
 
 
 // Index
 router.post("/new"
-    ,userController.createUser
-    ,userController.respondJSON
-    ,userController.errorJSON);
+    , userController.createUser
+    , userController.respondJSON
+    , userController.errorJSON);
 // TODO: createWithArray
 router.post("/login"
-    ,userController.loginUser
-    ,userController.respondJSON
-    ,userController.errorJSON);
+    , userController.loginUser
+    , userController.respondJSON
+    , userController.errorJSON);
 router.get("/:userId/logout"
-    ,userController.verifyJWT
-    ,userController.logoutUser
-    ,userController.respondJSON
-    ,userController.errorJSON);
+    , userController.verifyJWT
+    , userController.logoutUser
+    , userController.respondJSON
+    , userController.errorJSON);
 router.get("/:userId"
-    ,userController.verifyJWT
-    ,userController.getUserByName
-    ,userController.respondJSON);
+    , userController.verifyJWT
+    , userController.getUserByName
+    , userController.respondJSON);
 router.put("/:userId"
-    ,userController.verifyJWT
-    ,userController.updateUser
-    ,userController.respondJSON);
+    , userController.verifyJWT
+    , userController.updateUser
+    , userController.respondJSON);
 router.delete("/:userId"
-    ,userController.verifyJWT
-    ,userController.deleteUser
-    ,userController.respondJSON);
+    , userController.verifyJWT
+    , userController.deleteUser
+    , userController.respondJSON);
 
 router.use(userController.errorJSON);
 
