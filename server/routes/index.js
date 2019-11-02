@@ -7,9 +7,11 @@ const router = require('express').Router(),
     workoutProgramPublicRoutes = require('./workoutProgramPublicRoutes'),
     workoutActivityRoutes = require('./workoutActivityRoutes');
 
-router.use("/user/:userId/workoutProgram", workoutProgramRoutes);
-router.use("/user/:userId/workoutActivity", workoutActivityRoutes);
+
+
 router.use("/user", userRoutes);
+router.use("/user", workoutProgramRoutes);
+router.use("/user", workoutActivityRoutes);
 router.use("/workoutprogram", workoutProgramPublicRoutes);
 
 module.exports = router;

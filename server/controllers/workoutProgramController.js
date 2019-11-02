@@ -37,8 +37,6 @@ module.exports = {
 
     createWorkoutProgram: (req, res, next) => {
         let newProgram = new WorkoutProgram(getWorkoutProgramParams(req.body));
-        let userId = req.params.userId;
-
         WorkoutProgram.create(newProgram, (err, workoutProgram) => {
             if (err) {
                 console.log("FAILED TO CREATE WORKOUT PROGRAM");
@@ -48,14 +46,14 @@ module.exports = {
                 });
             }
             if (!workoutProgram) {
+                console.log("FAILED TO RETRIEVE WORKOUT PROGRAM");
                 res.statusCode = 500;
                 return res.json({
                     errors: ['Failed to retrieve workout Program after creation']
                 });
             }
-            console.log("WORKOUTPROGRAM._ID");
-            console.log(workoutProgram._id);
-            User.findByIdAndUpdate(userId, { $push: { workoutPrograms: workoutProgram._id } },
+            console.log(req.params);
+            User.findByIdAndUpdate(req.params.userId, { $push: { workoutPrograms: workoutProgram._id } },
                 (err, user) => {
                     if (err) {
                         console.log("FAILED TO UPDATE USER");

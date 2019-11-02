@@ -2,6 +2,9 @@ const jwt = require('jsonwebtoken'),
     httpStatus = require('http-status-codes'),
     User = require('../models/user');
 
+const getJWT = (req) => {
+    return (req.headers.authorization.split(" ").pop());
+}
 
 module.exports = {
     respondJSON: (req, res) => {
@@ -29,7 +32,8 @@ module.exports = {
 
     // TODO: DELETE jwt FROM CLIENT, INSTEAD OF FROM SERVER (WRITE IN CONCLUSION ABOUT IT)
     verifyJWT: (req, res, next) => {
-        let token = req.headers.token; // Retrieve JWT token from header
+        // let token = req.headers.authorization.split(" ").pop(); // Retrieve JWT token from header
+        let token = getJWT(req);
         if (token) {
             jwt.verify(token, process.env.JWT_SECRET, (errors, payload) => { // Verify JWT and decode payload
                 if (payload) {

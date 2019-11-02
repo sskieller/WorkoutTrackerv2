@@ -5,6 +5,30 @@ const httpStatus = require('http-status-codes'),
 require('../config/passport');
 // TODO: Status codes
 
+const getUserParams = (body) => {
+    return {
+        username: body.username,
+        password: body.password,
+        name: {
+            firstName: body.name.firstName,
+            lastName: body.name.lastName
+        }
+    };
+};
+const getNonNullUserParams = (body, user) => {
+    // Check if body contains and create object thereafter
+    user.username = body.username ? body.username : user.username;
+    user.password = body.password ? body.password : user.password;
+    user.name.firstName = body.name.firstName ? body.name.firstName : user.name.firstName;
+    user.name.lastName = body.name.lastName ? body.name.lastName : user.name.lastName;
+
+    return user;
+};
+
+const getJWT = (req) => {
+    return (req.headers.authorization.split(" ").pop());
+};
+
 module.exports = {
     // Updates only user information. 
     // To update arrays, i.e. workoutPrograms or workoutActivities go to the proper controllers
@@ -27,9 +51,7 @@ module.exports = {
     },
 
     createUser: (req, res, next) => {
-        console.log(req.body);
         let newUser = new User(getUserParams(req.body));
-
         User.register(newUser, req.body.password, (error, user) => {
             if (error) {
                 res.statusCode = 500;
@@ -84,7 +106,8 @@ module.exports = {
     },
 
     logoutUser: (req, res, next) => {
-        let token = req.headers.token; // Retrieve JWT token from header
+        // let token = req.headers.authorization.split(" ").pop(); // Retrieve JWT token from header
+        let token = getJWT(req);
         if (token) {
             jwt.verify(token, process.env.JWT_SECRET, (errors, payload) => { // Verify JWT and decode payload
                 if (payload) {
@@ -120,6 +143,7 @@ module.exports = {
     getUserByName: (req, res, next) => {
         if (req) {
             let userId = req.params.userId;
+            console.log(req.params.userId);
             User.findById(userId)
                 .then(user => {
                     res.locals.user = user;
@@ -146,22 +170,3 @@ module.exports = {
     },
 };
 
-const getUserParams = (body) => {
-    return {
-        username: body.username,
-        password: body.password,
-        name: {
-            firstName: body.name.firstName,
-            lastName: body.name.lastName
-        }
-    };
-};
-const getNonNullUserParams = (body, user) => {
-    // Check if body contains and create object thereafter
-    user.username = body.username ? body.username : user.username;
-    user.password = body.password ? body.password : user.password;
-    user.name.firstName = body.name.firstName ? body.name.firstName : user.name.firstName;
-    user.name.lastName = body.name.lastName ? body.name.lastName : user.name.lastName;
-
-    return user;
-}
