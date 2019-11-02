@@ -8,6 +8,16 @@
 // http://localhost:3000/api-docs/#/
 // https://app.swaggerhub.com/apis/awayfromkeyboard/swagger-workout-tracker/1.0.0
 
+/* 
+  Create routes for "/:userId/workoutProgram/:workoutProgramId/workoutActivity" etc.
+  The activities should be written next to the exercise
+              | name | description | sets | repstime |
+              ----------------------------------------
+  exercise:   | bobi | lalala 1234 | 320  | 2 reps   |
+  activities: | bobi | lalala 1234 | 233  | 5 reps   |
+              ----------------------------------------
+*/
+
 const db = require('./db-init');
 
 const express = require('express'),

@@ -1,13 +1,22 @@
-const httpStatus = require('http-status-codes');
+"use strict";
+const httpStatus = require('http-status-codes'),
+    WorkoutProgram = require('../models/workoutProgram');
 
 module.exports = {
-    getPublicWorkoutProgram: (req,res,next) => {
-        if (req) {
-            console.log("NOT IMPLEMENTED");
-        }
-        res.json({
-            success: false,
-            error: "NOT IMPLEMENTED"
-        });
-    }
+    getPublicWorkoutProgram: (req, res, next) => {
+        WorkoutProgram.find()
+            .then(programs => {
+                res.json({
+                    programs
+                });
+                next();
+            })
+            .catch((err) => {
+                console.log(err);
+                res.json({
+                    success: false,
+                    error: "No workout programs found"
+                });
+            });
+    },
 }

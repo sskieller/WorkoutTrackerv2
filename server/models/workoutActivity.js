@@ -1,6 +1,7 @@
 const mongoose = require('mongoose'),
     { Schema } = mongoose,
     WorkoutExercise = require('./workoutExercise'),
+    WorkoutActivity = require('./activities'),
 
     workoutActivitySchema = new Schema(
         {
@@ -14,6 +15,7 @@ const mongoose = require('mongoose'),
                 required: true,
             },
             exercises: [{ type: Schema.Types.ObjectId, ref: "WorkoutExercise" }],
+            activities: [{type: Schema.Types.ObjectId, ref: "Activities"}]
         },
         {
             timestamps: true,

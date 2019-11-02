@@ -4,27 +4,27 @@ const express = require('express'),
     workoutActivityController = require('../controllers/workoutActivityController');
 
 // Index for /user/:userId/workoutActivity
-router.get("/:userId/workoutActivity/"
+router.get("/:userId/workoutProgram/:workoutProgramId/workoutActivity"
     , helperFunctions.verifyJWT
     , workoutActivityController.getAllWorkoutActivity
     , helperFunctions.respondJSON
     , helperFunctions.errorJSON);
-router.post("/:userId/workoutActivity/new"
+router.post("/:userId/workoutProgram/:workoutProgramId/workoutActivity/new"
     ,helperFunctions.verifyJWT
     ,workoutActivityController.createWorkoutActivity
     ,helperFunctions.respondJSON
     ,helperFunctions.errorJSON);
-router.get("/:userId/workoutActivity/:workoutActivityId"
+router.get("/:userId/workoutProgram/:workoutProgramId/workoutActivity/:workoutActivityId"
     ,helperFunctions.verifyJWT
     ,workoutActivityController.getWorkoutActivityById
     ,helperFunctions.respondJSON
     ,helperFunctions.errorJSON);
-router.put("/:userId/workoutActivity/:workoutActivityId"
+router.put("/:userId/workoutProgram/:workoutProgramId/workoutActivity/:workoutActivityId"
     ,helperFunctions.verifyJWT
     ,workoutActivityController.updateWorkoutActivityById
     ,helperFunctions.respondJSON
     ,helperFunctions.errorJSON);
-router.delete("/:userId/workoutActivity/:workoutActivityId"
+router.delete("/:userId/workoutProgram/:workoutProgramId/workoutActivity/:workoutActivityId"
     ,helperFunctions.verifyJWT
     ,workoutActivityController.deleteWorkoutActivityById
     ,helperFunctions.respondJSON
