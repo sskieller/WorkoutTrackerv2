@@ -165,6 +165,7 @@ module.exports = {
         res.json(errorObject);
     },
     // https://github.com/azuqua/jwt-redis-session
+    // TODO: DELETE jwt FROM CLIENT, INSTEAD OF FROM SERVER (WRITE IN CONCLUSION ABOUT IT)
     verifyJWT: (req, res, next) => {
         let token = req.headers.token; // Retrieve JWT token from header
         if (token) {
