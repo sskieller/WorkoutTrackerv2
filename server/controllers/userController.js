@@ -27,7 +27,6 @@ module.exports = {
     },
 
     createUser: (req, res, next) => {
-        if (req.skip) next();
         console.log(req.body);
         let newUser = new User(getUserParams(req.body));
 
