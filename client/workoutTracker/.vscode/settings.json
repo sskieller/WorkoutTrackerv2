@@ -1,0 +1,6 @@
+{
+    "javascript.suggest.completeFunctionCalls": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.tslint": true
+  }
+}
