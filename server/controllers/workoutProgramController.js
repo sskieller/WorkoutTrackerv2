@@ -2,6 +2,7 @@
 const httpStatus = require('http-status-codes'),
     WorkoutProgram = require('../models/workoutProgram'),
     WorkoutExercise = require('../models/workoutExercise'),
+    WorkoutActivity = require('../models/workoutActivity'),
     User = require('../models/user');
 
 const getWorkoutProgramParams = (body) => {

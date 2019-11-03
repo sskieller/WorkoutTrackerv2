@@ -24,9 +24,4 @@ router.put("/:userId/workoutProgram/:workoutProgramId/workoutActivity/:workoutAc
     ,workoutActivityController.updateWorkoutActivityById
     ,helperFunctions.respondJSON
     ,helperFunctions.errorJSON);
-router.delete("/:userId/workoutProgram/:workoutProgramId/workoutActivity/:workoutActivityId"
-    ,helperFunctions.verifyJWT
-    ,workoutActivityController.deleteWorkoutActivityById
-    ,helperFunctions.respondJSON
-    ,helperFunctions.errorJSON);
 module.exports = router;

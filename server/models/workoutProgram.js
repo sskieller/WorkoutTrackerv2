@@ -14,7 +14,7 @@ const mongoose = require('mongoose'),
                 required: true,
             },
             exercises: [{ type: Schema.Types.ObjectId, ref: "WorkoutExercise" }],
-            activities: [{type: Schema.Types.ObjectId, ref: "WorkoutActivities"}]
+            activities: [{type: Schema.Types.ObjectId, ref: "WorkoutActivity"}]
         },
         {
             timestamps: true,

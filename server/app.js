@@ -38,7 +38,7 @@ const logger = require('morgan'),
   path = require('path'),
   cookieParser = require('cookie-parser');
 
-const swaggerAPIVersion = '1.1.0';
+const swaggerAPIVersion = '1.2.0';
 const swaggerUi = require('swagger-ui-express'),
   swaggerOptions = {
   swaggerOptions: {

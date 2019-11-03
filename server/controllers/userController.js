@@ -17,12 +17,13 @@ const getUserParams = (body) => {
 };
 const getNonNullUserParams = (body, user) => {
     // Check if body contains and create object thereafter
-    user.username = body.username ? body.username : user.username;
-    user.password = body.password ? body.password : user.password;
-    user.name.firstName = body.name.firstName ? body.name.firstName : user.name.firstName;
-    user.name.lastName = body.name.lastName ? body.name.lastName : user.name.lastName;
+    let newDataUser = user;
+    newDataUser.username = body.username ? body.username : user.username;
+    newDataUser.password = body.password ? body.password : user.password;
+    newDataUser.name.firstName = body.name.firstName ? body.name.firstName : user.name.firstName;
+    newDataUser.name.lastName = body.name.lastName ? body.name.lastName : user.name.lastName;
 
-    return user;
+    return newDataUser;
 };
 
 const getJWT = (req) => {
@@ -35,19 +36,41 @@ module.exports = {
     updateUser: (req, res, next) => {
         let userId = req.params.userId;
         User.findById(userId, (err, user) => {
+            let oldUsername = user.username;
             if (!err) {
                 let newDataUser = getNonNullUserParams(req.body, user);
-                user.save((err, newDataUser) => {
-                    if (err) {
-                        console.log(err);
-                        return;
-                    }
-                    console.log("User saved: " + newDataUser);
-                });
-                res.locals.user = newDataUser;
-                next();
+                if (oldUsername === newDataUser.username) {
+                    user.save((err, newDataUser) => {
+                        if (err) {
+                            console.log(err);
+                            return;
+                        }
+                    });
+                    res.locals.user = newDataUser;
+                    next();
+                } else {
+                    User.findOne({ 'username': oldUsername }, (err, usr) => {
+                        // if no user with that name found
+                        if (err) {
+                            user.save((err, newDataUser) => {
+                                if (err) {
+                                    console.log(err);
+                                    return;
+                                }
+                            });
+                            res.locals.user = newDataUser;
+                            next();
+                        }
+                        if (usr) {
+                            res.json({
+                                success: false,
+                                error: "Username already exists"
+                            });
+                        }
+                    });
+                }
             }
-        })
+        });
     },
 
     createUser: (req, res, next) => {
