@@ -14,7 +14,9 @@ const getWorkoutProgramParams = (body) => {
 module.exports = {
     getAllWorkoutProgram: (req, res, next) => {
         WorkoutProgram.find()
+            .populate('exercises', 'activities')
             .then(programs => {
+                console.log(programs);
                 res.json({
                     programs
                 });
@@ -68,7 +70,15 @@ module.exports = {
     getWorkoutProgramById: (req, res, next) => {
         let workoutProgramId = req.params.workoutProgramId;
         WorkoutProgram.findById(workoutProgramId)
-            .then(program => {
+        .populate({
+            path: 'exercises',
+            populate: {path: 'exercises'}
+        })
+        .populate({
+            path: 'activities',
+            populate: {path: 'activities'}
+        })    
+        .then(program => {
                 res.json({
                     program
                 });

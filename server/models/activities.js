@@ -10,7 +10,6 @@ const mongoose = require('mongoose'),
             },
             description: {
                 type: String,
-                required: true,
             },
             sets: {
                 type: Number, 
@@ -28,4 +27,4 @@ const mongoose = require('mongoose'),
         }
     )
 
-module.exports = mongoose.model("Activities", activitiesSchema);
+module.exports = mongoose.model("woActivity", activitiesSchema);

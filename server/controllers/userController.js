@@ -71,7 +71,7 @@ module.exports = {
         })
     },
 
-    createUsersWithArrayInput: (req,res,next) => {
+    createUsersWithArrayInput: (req, res, next) => {
         if (req) {
             console.log("NOT IMPLEMENTED");
         }
@@ -145,6 +145,10 @@ module.exports = {
             let userId = req.params.userId;
             console.log(req.params.userId);
             User.findById(userId)
+                .populate({
+                    path: 'workoutPrograms',
+                    populate: { path: 'workoutPrograms' },
+                })
                 .then(user => {
                     res.locals.user = user;
                     next();

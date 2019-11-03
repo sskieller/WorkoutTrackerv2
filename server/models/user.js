@@ -26,8 +26,7 @@ const mongoose = require('mongoose'),
                     trim: true,
                 }
             },
-            workoutPrograms: [{ type: Schema.Types.ObjectId, ref: "WorkoutProgram" }],
-            workoutActivities: [{ type: Schema.Types.ObjectId, ref: "WorkoutActivity" }]
+            workoutPrograms: [{ type: Schema.Types.ObjectId, ref: "WorkoutProgram" }]
         },
         {
             timestamps: true,

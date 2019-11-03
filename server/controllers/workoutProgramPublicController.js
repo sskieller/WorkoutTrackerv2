@@ -5,11 +5,11 @@ const httpStatus = require('http-status-codes'),
 module.exports = {
     getPublicWorkoutProgram: (req, res, next) => {
         WorkoutProgram.find()
+            .populate('exercises')
             .then(programs => {
                 res.json({
                     programs
                 });
-                next();
             })
             .catch((err) => {
                 console.log(err);

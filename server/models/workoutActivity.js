@@ -14,8 +14,7 @@ const mongoose = require('mongoose'),
                 type: String,
                 required: true,
             },
-            exercises: [{ type: Schema.Types.ObjectId, ref: "WorkoutExercise" }],
-            activities: [{type: Schema.Types.ObjectId, ref: "Activities"}]
+            woActivities: [{type: Schema.Types.ObjectId, ref: "woActivity"}]
         },
         {
             timestamps: true,
