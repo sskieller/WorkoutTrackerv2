@@ -21,15 +21,16 @@ export interface CreateUserParams {
   name: {
     firstName: string,
     lastName: string
-  },
-  username: string,
-  password: string
-};
+  };
+  username: string;
+  password: string;
+}
+
 export interface LoginUserParams {
   [key: string]: any; // HttpParams type compability
   username: string,
   password: string,
-};
+}
 
 export abstract class UserService {
   abstract createUser(params: CreateUserParams): Observable<UserInterface[]>;
