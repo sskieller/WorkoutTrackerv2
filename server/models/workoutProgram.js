@@ -1,24 +1,24 @@
-const mongoose = require('mongoose'),
-    { Schema } = mongoose,
-    WorkoutExercise = require('./workoutExercise'),
+const mongoose = require( "mongoose" );
+const {Schema} = mongoose;
+const WorkoutExercise = require( "./workoutExercise" );
 
-    workoutProgramSchema = new Schema(
-        {
-            name: {
-                type: String,
-                required: true,
-                trim: true,
-            },
-            description: {
-                type: String,
-                required: true,
-            },
-            exercises: [{ type: Schema.Types.ObjectId, ref: "WorkoutExercise" }],
-            activities: [{type: Schema.Types.ObjectId, ref: "WorkoutActivity"}]
-        },
-        {
-            timestamps: true,
-        }
-    )
+const workoutProgramSchema = new Schema(
+	{
+		name: {
+			type: String,
+			required: true,
+			trim: true,
+		},
+		description: {
+			type: String,
+			required: true,
+		},
+		exercises: [{type: Schema.Types.ObjectId, ref: "WorkoutExercise"}],
+		activities: [{type: Schema.Types.ObjectId, ref: "WorkoutActivity"}],
+	},
+	{
+		timestamps: true,
+	}
+);
 
-module.exports = mongoose.model('WorkoutProgram', workoutProgramSchema);
+module.exports = mongoose.model( "WorkoutProgram", workoutProgramSchema );

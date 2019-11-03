@@ -17,7 +17,7 @@
   activities: | bobi | lalala 1234 | 233  | 5 reps   |
               ----------------------------------------
 */
-
+const cors = require('cors');
 const db = require('./db-init');
 
 const express = require('express'),
@@ -26,6 +26,8 @@ const express = require('express'),
   passport = require('passport');
 router.use(passport.initialize());
 router.use(passport.session());
+
+router.use(cors());
 
 require('dotenv').config();
 
