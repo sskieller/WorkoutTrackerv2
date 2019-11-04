@@ -21,10 +21,12 @@ import { API_BASE_URL } from './app.tokens';
 import { UserModule } from './user/user.module';
 import { UserControlModule } from './shared/components';
 import { UserLoginModule } from './shared/components';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

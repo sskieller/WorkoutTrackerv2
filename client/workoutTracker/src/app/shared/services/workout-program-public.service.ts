@@ -8,16 +8,16 @@ import {WorkoutActivityInterface} from './workout-activity.service';
 
 
 export interface WorkoutProgramPublicInterface {
-  _id: number,
-  name: string,
-  description: string,
-  exercises: [WorkoutProgramInterface],
-  activities: [WorkoutActivityInterface]
-};
+  _id: number;
+  name: string;
+  description: string;
+  exercises: [WorkoutProgramInterface];
+  activities: [WorkoutActivityInterface];
+}
 
 export abstract class WorkoutProgramPublicService {
   abstract getPublicWorkoutProgram(): Observable<WorkoutProgramPublicInterface[]>;
-};
+}
 
 @Injectable()
 export class HttpWorkoutProgramPublicService implements WorkoutProgramPublicService {

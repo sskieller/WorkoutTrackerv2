@@ -7,6 +7,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 
 import { HomeComponent } from './home/home.component';
 import { WorkoutProgramComponent } from './workout-program/workout-program.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Route[] = [
   {path: '', pathMatch: 'full', component: HomeComponent},
@@ -15,7 +16,8 @@ const routes: Route[] = [
 
 @NgModule({
   declarations: [HomeComponent,
-    WorkoutProgramComponent],
+    WorkoutProgramComponent,
+    LoginComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

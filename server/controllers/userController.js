@@ -123,7 +123,7 @@ module.exports = {
 				res.json( {
 					success: true,
 					token: signedToken,
-					userId: user._id,
+					user: user
 				} );
 			} else {
 				res.json( {
