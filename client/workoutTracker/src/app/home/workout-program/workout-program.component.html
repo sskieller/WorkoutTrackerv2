@@ -1,1 +1,20 @@
-<p>workout-program works!</p>
+<span>
+  Programs
+</span>
+
+<!-- List of programs with name and description -->
+<mat-grid-list [cols]="columns$ | async" gutterSize="16">
+  <mat-grid-tile class="tile" *ngFor="let program of workoutProgramsPublic">
+    <div class="tile__content" fxLayout="column" fxLayoutAlign="center center">
+      <span class="tile__program-name" ngClass.xs="tile__program-name--xs">
+        {{ program.name }}
+      </span>
+      <span
+        class="tile__program-description"
+        ngClass.xs="tile__program-description--xs"
+      >
+        {{ program.description }}
+      </span>
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>
