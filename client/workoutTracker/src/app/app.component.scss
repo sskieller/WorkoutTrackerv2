@@ -10,7 +10,7 @@ mat-sidenav-container {
 }
 
 .toolbar {
-  background-color: mat-color($nga-background, card);
+  background-color: mat-color($wt-background, card);
   position: relative;
 }
 
@@ -26,14 +26,14 @@ mat-sidenav-container {
 }
 
 .toolbar__title {
-  color: mat-color($nga-foreground, text);
+  color: mat-color($wt-foreground, text);
   font-family: 'Titillium Web', sans-serif;
   font-weight: 600;
   text-decoration: none;
 }
 
 .toolbar__icon-button {
-  color: mat-color($nga-foreground, icon);
+  color: mat-color($wt-foreground, icon);
 }
 
 .toolbar__shopping-cart-button {

@@ -1,29 +1,29 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav>
-    <!-- <wt-userLogin-form (userLogin)="sidenav.close()"></wt-userLogin-form> -->
+    <wt-user-control (userControl)="sidenav.close()"></wt-user-control>
   </mat-sidenav>
 
   <mat-toolbar class="toolbar">
-    <button mat-icon-button
-      class="toolbar__icon-button">
-      <!-- (click)="sidenav.toggle"> -->
-      <mat-icon>user</mat-icon>
+    <button
+      mat-icon-button
+      class="toolbar__icon-button"
+      (click)="sidenav.toggle()"
+    >
+      User Control
     </button>
 
-    <div class="toolbar__logo-title-group"
-         fxLayout
-         fxLayoutAlign="center center">
-      <a class="toolbar__title"
-         routerLink="/">Workout Tracker</a>
+    <div
+      class="toolbar__logo-title-group"
+      fxLayout
+      fxLayoutAlign="center center"
+    >
+      <a class="toolbar__title" routerLink="/">Workout Tracker</a>
     </div>
 
     <div fxFlex></div>
-
-    <!-- <button mat-icon-button
-            class="toolbar__icon-button
-                   toolbar__shopping-cart-button">
-      <mat-icon>shopping_cart</mat-icon>
-    </button> -->
+    <!-- User login in toolbar -->
+    <wt-user-login></wt-user-login>
   </mat-toolbar>
-
+  <!-- Main content of page -->
   <router-outlet></router-outlet>
+</mat-sidenav-container>

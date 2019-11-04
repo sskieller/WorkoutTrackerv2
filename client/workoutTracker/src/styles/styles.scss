@@ -12,7 +12,7 @@
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include angular-material-theme($nga-theme);
+@include angular-material-theme($wt-theme);
 
 
 // Global styles.
@@ -28,9 +28,9 @@ html {
 
 body {
   background-color: whitesmoke;
-  font-family: mat-font-family($nga-typography);
-  line-height: mat-line-height($nga-typography, body-1);
-  font-size: mat-font-size($nga-typography, body-1);
+  font-family: mat-font-family($wt-typography);
+  line-height: mat-line-height($wt-typography, body-1);
+  font-size: mat-font-size($wt-typography, body-1);
   height: 100%;
   margin: 0;
 }

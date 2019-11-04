@@ -19,10 +19,12 @@ import { SHARED_SERVICES } from './shared/services';
 import { routes } from './app.routing';
 import { API_BASE_URL } from './app.tokens';
 import { UserModule } from './user/user.module';
+import { UserControlModule } from './shared/components';
+import { UserLoginModule } from './shared/components';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,9 +36,10 @@ import { UserModule } from './user/user.module';
     MatButtonModule
     , MatIconModule
     , MatSidenavModule
-    , MatToolbarModule, UserModule
-
-    // ,SearchFormModule
+    , MatToolbarModule
+    , UserModule
+    , UserLoginModule
+    , UserControlModule
   ],
   providers: [
     ...SHARED_SERVICES,

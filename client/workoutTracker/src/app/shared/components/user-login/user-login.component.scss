@@ -1,0 +1,29 @@
+@import '../../../../styles/theme';
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+.toolbar__user-login {
+  background-color: mat-color($wt-background, card);
+  position: relative;
+}
+
+.toolbar__user-login-button {
+  margin-left: 5px;
+  margin-right: 5px;
+  text-decoration: none;
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 600;
+  color: mat-color($wt-foreground, text);
+}
+
+.toolbar__user-signup-button {
+  margin-left: 5px;
+  margin-right: 5px;
+  text-decoration: none;
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 600;
+  color: mat-color($wt-foreground, text);
+}
