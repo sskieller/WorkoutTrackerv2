@@ -1,17 +1,42 @@
+import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PrivateWorkoutProgramsComponent } from './workoutProgram/private-workout-programs/private-workout-programs.component';
-import { CreateExerciseComponent } from './workoutProgram/create-exercise/create-exercise.component';
-import { WorkoutActivitiesComponent } from './workoutProgram/workoutActivity/workout-activities/workout-activities.component';
-import { CreateWorkoutActivityComponent } from './workoutProgram/workoutActivity/create-workout-activity/create-workout-activity.component';
+import { UserLoginComponent } from './user-login';
+import { UserRegistrationComponent } from './user-registration';
+import { UserPageComponent } from './user-page';
+import { WorkoutProgramByIdComponent
+  , CreateWorkoutProgramComponent
+  , PrivateWorkoutProgramsComponent
+  , CreateExerciseComponent,
+  WorkoutActivitiesComponent,
+  CreateWorkoutActivityComponent} from './workoutProgram';
+
 
 
 
 @NgModule({
   // tslint:disable-next-line: max-line-length
-  declarations: [PrivateWorkoutProgramsComponent, CreateExerciseComponent, WorkoutActivitiesComponent, CreateWorkoutActivityComponent],
+  declarations: [
+    UserLoginComponent,
+    UserRegistrationComponent,
+    UserPageComponent,
+    // Workout Programs
+    WorkoutProgramByIdComponent,
+    CreateWorkoutProgramComponent,
+    PrivateWorkoutProgramsComponent,
+    CreateExerciseComponent,
+    // Activities
+    WorkoutActivitiesComponent,
+    CreateWorkoutActivityComponent
+  ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule.forChild([
+      {path: '', pathMatch: 'full', redirectTo: 'login'},
+      {path: 'new', component: UserRegistrationComponent},
+      {path: 'login', component: UserLoginComponent},
+      {path: ':userId', component: UserPageComponent}
+    ])
   ]
 })
 export class UserModule { }
