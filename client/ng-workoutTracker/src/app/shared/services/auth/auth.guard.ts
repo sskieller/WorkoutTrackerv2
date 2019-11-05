@@ -14,7 +14,10 @@ constructor(private authService: AuthenticationService, private router: Router) 
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
       const url = state.url;
-      if (this.authService.isLoggedIn) {return true; }
+
+      if (this.authService.isLoggedIn) {
+        console.log("GO FORWARD")
+        return true; }
       // Store attempted URL for redirecting
       this.authService.redirectUrl = url;
       // navigate to the login page

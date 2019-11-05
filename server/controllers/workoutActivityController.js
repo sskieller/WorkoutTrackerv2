@@ -17,6 +17,7 @@ module.exports = {
     WorkoutActivity.find()
       .populate("woActivities")
       .then(woActivities => {
+		  WorkoutProgram.findById(req.params.workoutProgramId)
         res.json({
           woActivities
         });

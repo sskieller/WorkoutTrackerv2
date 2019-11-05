@@ -1,1 +1,30 @@
-<p>toolbar works!</p>
+<mat-toolbar class="toolbar">
+  <mat-toolbar-row class="toolbar__row">
+    <div class="toolbar__title-group" fxLayout fxLayoutAlign="center center">
+      <a class="toolbar__title" [routerLink]="['/home']">Workout Tracker</a>
+    </div>
+  </mat-toolbar-row>
+
+  <mat-toolbar-row class="toolbar__row">
+    <span>Row 2</span>
+
+
+    <div fxFlex></div>
+
+    <div class="toolbar__login-logout-signup-group">
+      <div *ngIf="isLoggedIn; else elseBlock">
+        <button mat-stroked-button class="toolbar__login-signup-logout-text">
+          Logout
+        </button>
+      </div>
+      <ng-template #elseBlock>
+        <button mat-stroked-button class="toolbar__login-signup-logout-text">
+          Login
+        </button>
+        <button mat-stroked-button class="toolbar__login-signup-logout-text">
+          Signup
+        </button>
+      </ng-template>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>

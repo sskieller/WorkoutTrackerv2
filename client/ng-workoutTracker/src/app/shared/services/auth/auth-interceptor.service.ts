@@ -7,6 +7,7 @@ import { AuthenticationService } from './authentication.service';
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private auth: AuthenticationService) { }
 
+  // Intercepts any request made from web app and inserts token
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Get token from the service
     const authHeader = 'Bearer ' + this.auth.getToken();

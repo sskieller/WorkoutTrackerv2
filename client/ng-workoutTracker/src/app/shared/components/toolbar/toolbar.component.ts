@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../../services';
 
 @Component({
   selector: 'wt-toolbar',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ToolbarComponent implements OnInit {
 
-  constructor() { }
+  // Import isLoggedIn from authentication
+
+  constructor(private authService: AuthenticationService) {
+
+  }
 
   ngOnInit() {
   }

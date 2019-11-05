@@ -9,7 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ToolbarModule } from './shared/components/toolbar/toolbar.module';
 import { AuthenticationService, AuthInterceptor } from './shared/services';
-import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { PageNotFoundComponentComponent } from './page-not-found-component/page-not-found-component.component';
 
 
@@ -23,7 +23,8 @@ import { PageNotFoundComponentComponent } from './page-not-found-component/page-
     AppRoutingModule,
     UserModule,
     ToolbarModule,
-    HomeModule
+    HomeModule,
+    HttpClientModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
