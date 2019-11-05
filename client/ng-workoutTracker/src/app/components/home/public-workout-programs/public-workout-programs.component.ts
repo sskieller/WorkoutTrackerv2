@@ -10,6 +10,7 @@ export class PublicWorkoutProgramsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log('I INITIATED');
   }
 
 }

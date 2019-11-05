@@ -18,7 +18,8 @@ constructor(private authService: AuthenticationService, private router: Router) 
       // Store attempted URL for redirecting
       this.authService.redirectUrl = url;
       // navigate to the login page
-      this.router.navigate(['/user/login']);
+      console.log("IM REROUTING")
+      this.router.navigate(['user/login']);
       return false;
   }
 }
