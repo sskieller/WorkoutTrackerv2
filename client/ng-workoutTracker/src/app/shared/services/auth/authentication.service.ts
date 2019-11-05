@@ -1,10 +1,17 @@
 import { environment } from './../../../../environments/environment';
 import { Injectable } from '@angular/core';
-import { RegisterUser, User } from '../../components/models';
+import { RegisterUser, User, LoginUser, UserId } from '../../components/models';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 interface AuthResponse {
   token: string;
+}
+
+interface LoginResponse {
+  token: string;
+  user: {
+    _id: string;
+  };
 }
 
 @Injectable({
@@ -33,6 +40,7 @@ export class AuthenticationService {
     }
   }
 
+
   public isLoggedIn() {
     // const token = this.getToken();
     // if (token) {
@@ -41,7 +49,22 @@ export class AuthenticationService {
     // } else {
     //   return false;
     // }
+    // return true;
     return true;
+  }
+
+  public logout(): any {
+    this.saveToken('');
+    return true;
+  }
+
+  public login(user: LoginUser): any {
+    const url = `${this.api_base_url}/user/login`;
+    this.http.post<LoginResponse>(url, user).subscribe(data => {
+      this.saveToken(data.token);
+      this.saveUserId(data.user._id);
+      return true;
+    });
   }
 
   public register(user: RegisterUser): any {
@@ -74,5 +97,13 @@ export class AuthenticationService {
     } else {
       return '';
     }
+  }
+
+  private saveUserId(userId: string) {
+    window.localStorage.userId = userId;
+  }
+  public getUserId(): string {
+    // return window.localStorage.userId;
+    return '0';
   }
 }

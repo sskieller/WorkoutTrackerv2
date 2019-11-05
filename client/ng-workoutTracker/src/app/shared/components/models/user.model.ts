@@ -25,3 +25,6 @@ export class LoginUser {
   username: string;
   password: string;
 }
+export class UserId {
+  userId: string;
+}

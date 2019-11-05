@@ -26,6 +26,34 @@
 
 .toolbar__login-logout-signup-group {
   color: mat-color($wt-foreground, text);
+
+}
+
+.toolbar__login-signup-logout {
+  color: mat-color($wt-foreground, text);
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 600;
+  text-decoration: none;
+
+  width: 80px;
+}
+
+.toolbar__programs-button {
+  color: mat-color($wt-foreground, text);
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.toolbar__home-button {
+  color: mat-color($wt-foreground, text);
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.toolbar__userpage-button {
+  color: mat-color($wt-foreground, text);
   font-family: 'Titillium Web', sans-serif;
   font-weight: 600;
   text-decoration: none;

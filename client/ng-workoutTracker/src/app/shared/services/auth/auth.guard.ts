@@ -16,12 +16,12 @@ constructor(private authService: AuthenticationService, private router: Router) 
       const url = state.url;
 
       if (this.authService.isLoggedIn) {
-        console.log("GO FORWARD")
+        console.log('GO FORWARD');
         return true; }
       // Store attempted URL for redirecting
       this.authService.redirectUrl = url;
       // navigate to the login page
-      console.log("IM REROUTING")
+      console.log('IM REROUTING');
       this.router.navigate(['user/login']);
       return false;
   }
