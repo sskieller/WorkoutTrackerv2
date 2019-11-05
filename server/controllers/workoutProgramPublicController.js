@@ -5,7 +5,7 @@ const WorkoutProgram = require( "../models/workoutProgram" );
 module.exports = {
 	getPublicWorkoutProgram: ( req, res, next ) => {
 		WorkoutProgram.find()
-			.populate( "exercises" )
+			// .populate( "exercises" )
 			.then( ( programs ) => {
 				res.json( {
 					programs,
