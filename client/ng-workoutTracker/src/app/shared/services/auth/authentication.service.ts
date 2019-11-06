@@ -20,18 +20,15 @@ interface LoginResponse {
   providedIn: 'root'
 })
 export class AuthenticationService {
-  isLoginSubject = new BehaviorSubject<boolean>(this.hasToken());
-
-
+  private isLoginSubject = new BehaviorSubject<boolean>(this.hasToken());
   // tslint:disable-next-line: variable-name
   private api_base_url = environment.API_BASE_URL;
   public redirectUrl = '';
+
   constructor(private http: HttpClient) { }
 
-  public currentLoginValue(): boolean {
-    console.log(this.isLoginSubject.value);
-    return this.isLoginSubject.value;
-  }
+  isUserLoggedIn$ = this.isLoginSubject.asObservable();
+
 
   public currentUser(): User {
     if (this.isLoggedIn()) {
@@ -76,6 +73,7 @@ export class AuthenticationService {
   public register(user: RegisterUser): any {
     const url = `${this.api_base_url}/user/new`;
     this.http.post<AuthResponse>(url, user).subscribe(data => {
+      console.log(data);
       return true;
     },
       // Errors will call this callback instead
@@ -87,6 +85,7 @@ export class AuthenticationService {
           // The backend returned an unsuccessful response code.
           // The response body may contain clues as to what went wrong,
           console.log(`Backend returned code ${err.status}, body was: ${err.error}`);
+          console.log(`Message: ${err.message}`);
         }
         return false;
       });

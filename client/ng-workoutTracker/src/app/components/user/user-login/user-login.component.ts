@@ -1,6 +1,6 @@
 import { UserService, AuthenticationService } from 'src/app/shared/services';
 import { Component, OnInit } from '@angular/core';
-import { LoginUserInterface, LoginUser } from 'src/app/shared/components/models';
+import { LoginUser } from 'src/app/shared/components/models';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-login.component.scss']
 })
 export class UserLoginComponent implements OnInit {
-  // user: LoginUserInterface;
   user: LoginUser;
   constructor(
     private authService: AuthenticationService,
@@ -24,6 +23,11 @@ export class UserLoginComponent implements OnInit {
   login() {
     this.authService.login(this.user);
     const url = `/user/${this.authService.getUserId()}`;
+    console.log("NAVIGATING");
+    console.log(url);
     this.router.navigateByUrl(url);
   }
+
+
 }
+

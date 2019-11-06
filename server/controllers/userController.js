@@ -6,12 +6,13 @@ require( "../config/passport" );
 // TODO: Status codes
 
 const getUserParams = ( body ) => {
+	console.log(body);
 	return {
 		username: body.username,
 		password: body.password,
 		name: {
-			firstName: body.name.firstName,
-			lastName: body.name.lastName,
+			firstName: body.firstName,
+			lastName: body.lastName,
 		},
 	};
 };
@@ -83,9 +84,11 @@ module.exports = {
 		const newUser = new User( getUserParams( req.body ) );
 		User.register( newUser, req.body.password, ( error, user ) => {
 			if ( error ) {
+				console.log(error);
 				res.statusCode = 500;
 				return res.json( {
-					errors: ["Failed to create new user"],
+					errors: ["Failed to create new user", error.message],
+					message: error.message
 				} );
 			}
 			if ( !user ) {

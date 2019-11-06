@@ -1,1 +1,38 @@
 <p>user-registration works!</p>
+<mat-card>
+  <mat-card-content>
+    <form>
+      <mat-form-field>
+          <input matInput [(ngModel)]="user.firstName"
+          name="firstName"
+          required
+          placeholder="Firstname">
+      </mat-form-field>
+
+      <mat-form-field>
+          <input matInput [(ngModel)]="user.lastName"
+          name="lastName"
+          required
+          placeholder="Lastname">
+      </mat-form-field>
+
+      <mat-form-field>
+          <input matInput [(ngModel)]="user.username"
+          name="username"
+          required
+          placeholder="Username">
+      </mat-form-field>
+      <mat-form-field>
+          <input matInput [(ngModel)]="user.password"
+          name="password"
+          type="password"
+          required
+          placeholder="Password">
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-raised-button (click)="registerUser()">Register</button>
+  </mat-card-actions>
+</mat-card>

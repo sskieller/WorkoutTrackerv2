@@ -41,23 +41,5 @@ export class UserService {
   getUser(userid): Observable<LoginUser> {
     const url = `${this.userUrl}/${userid}`; // GET api/v1/user/:userid
     return this.http.get<LoginUser>(url, httpOptions);
-    // .catch(this.handleError);
   }
-
-  // userLogin (user: LoginUser): Observable<LoginUser> {
-  //   const url = `${this.api_base_url}/user/login`;
-  //   return this.http.post<LoginUser>(this.userUrl, user)
-  //     .pipe(
-  //       catchError(this.handleError(url,user))
-  //     );
-  // }
-
-  // userLogin (user: LoginUser): Observable<LoginResponse> {
-  //   const url = `${this.api_base_url}/user/login`;
-  //   return this.http.post<LoginResponse>(url, user)
-  //     .pipe(
-  //       catchError(this.handleError('userLogin', user))
-  //     )
-  // }
-
 }

@@ -13,10 +13,8 @@ export class User {
 }
 
 export class RegisterUser {
-  name: {
-    firstName: string;
-    lastName: string;
-  };
+  firstName: string;
+  lastName: string;
   username: string;
   password: string;
 }
@@ -26,10 +24,6 @@ export class LoginUser {
   password: string;
 }
 
-export interface LoginUserInterface {
-  username: string;
-  password: string;
-}
 
 export class UserId {
   userId: string;
