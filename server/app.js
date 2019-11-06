@@ -27,7 +27,7 @@ const express = require('express'),
 router.use(passport.initialize());
 router.use(passport.session());
 
-router.use(cors());
+app.use(cors());
 
 require('dotenv').config();
 

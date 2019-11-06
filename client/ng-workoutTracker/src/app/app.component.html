@@ -1,3 +1,79 @@
-<wt-toolbar></wt-toolbar>
+<mat-card>
+        <span fxFlex></span>
+    <mat-toolbar class="toolbar">
+        
+        <mat-toolbar-row class="toolbar__row">
+            <div class="toolbar__title-group" fxLayout fxLayoutAlign="center center">
+                <a class="toolbar__title" [routerLink]="['/home']">Workout Tracker</a>
+            </div>
 
-<!-- <router-outlet></router-outlet> -->
+            <div fxFlex></div>
+
+            <div class="toolbar__login-logout-signup-group">
+                <div *ngIf="isLoggedIn$; else elseBlock">
+                    <a [routerLink]="['/user/${userid}/logout']">
+                        <button mat-stroked-button class="toolbar__login-signup-logout">
+                            Logout
+                        </button>
+                    </a>
+                </div>
+                <ng-template #elseBlock>
+                    <a [routerLink]="['/user/new']">
+                        <button mat-stroked-button class="toolbar__login-signup-logout">
+                            Signup
+                        </button>
+                    </a>
+                    <a>
+                        <button (click)="gotoUserLogin('/user/login')" mat-stroked-button
+                            class="toolbar__login-signup-logout">
+                            Login
+                        </button>
+                    </a>
+                </ng-template>
+            </div>
+        </mat-toolbar-row>
+
+        <mat-toolbar-row class="toolbar__row" fxLayout fxLayoutAlign="center center">
+            <a [routerLink]="['/home']">
+                <button mat-stroked-button class="toolbar__home-button" [routerLink]="['/home']">
+                    Home
+                </button>
+            </a>
+
+            <div class="toolbar__programs-button">
+                <div *ngIf="isLoggedIn$; else elseBlockProgram">
+                    <!-- <a [routerLink]="['/user/${userid}/workoutprogram']"> -->
+                    <a>
+                        <button (click)="gotoUserPageById('/user',userId)" mat-stroked-button
+                            class="toolbar__programs-button">
+                            Workout Programs
+                        </button>
+                    </a>
+                    <a routerLink="/user/{{userId}}">
+                        <button mat-stroked-button class="toolbar__userpage-button">
+                            Userpage
+                        </button>
+                    </a>
+                </div>
+                <ng-template #elseBlockProgram>
+                    <a [routerLink]="['/workoutprogram']">
+                        <button mat-stroked-button class="toolbar__programs-button">
+                            Workout Programs
+                        </button>
+                    </a>
+
+                </ng-template>
+            </div>
+        </mat-toolbar-row>
+
+
+    </mat-toolbar>
+</mat-card>
+
+<mat-card>
+    <router-outlet></router-outlet>
+            
+        
+</mat-card>
+
+

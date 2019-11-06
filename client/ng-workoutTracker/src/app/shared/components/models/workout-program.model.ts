@@ -13,3 +13,8 @@ export class WorkoutExercise {
   sets: number;
   repstime: string;
 }
+
+export class WorkoutProgramPublic {
+  name: string;
+  description: string;
+}

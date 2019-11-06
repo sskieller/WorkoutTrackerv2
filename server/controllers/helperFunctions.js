@@ -3,6 +3,7 @@ const httpStatus = require( "http-status-codes" );
 const User = require( "../models/user" );
 
 const getJWT = ( req ) => {
+	console.log(req.headers)
 	return ( req.headers.authorization.split( " " ).pop() );
 };
 

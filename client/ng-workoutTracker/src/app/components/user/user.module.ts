@@ -52,7 +52,7 @@ import { AuthGuard } from 'src/app/shared/services';
           }
         ]
       }
-    ])
-  ]
+    ]),
+  ],
 })
 export class UserModule { }
