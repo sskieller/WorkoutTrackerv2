@@ -7,7 +7,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthenticationService, AuthInterceptor } from './shared/services';
+import { AuthenticationService, AuthInterceptor, AuthGuard } from './shared/services';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { PageNotFoundComponentComponent } from './page-not-found-component/page-not-found-component.component';
 import { MessagesComponent } from './shared/components/messages/messages.component';
@@ -17,6 +17,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MessageService } from './shared/services/message.service';
 import {MatCardModule} from '@angular/material/card';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     MessagesComponent,
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
     UserModule,
@@ -41,7 +43,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     {provide: API_BASE_URL, useValue: environment.API_BASE_URL},
     HttpClient,
     AuthenticationService,
-    MessageService
+    MessageService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

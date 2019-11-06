@@ -112,7 +112,7 @@ module.exports = {
 
 	loginUser: ( req, res, next ) => {
 		passport.authenticate( "local", ( err, user, info ) => {
-			console.log( `User logged in: ${user.name.firstName} ${user.name.lastName}` );
+			// console.log( `User logged in: ${user.name.firstName} ${user.name.lastName}` );
 			if ( user ) {
 				const userId = {data: user._id};
 				const signedToken = jwt.sign(
