@@ -14,16 +14,16 @@ export class WorkoutProgramPublicService {
   private handleError: HandleError;
 
   constructor(private http: HttpClient,
-    httpErrorHandler: HttpErrorHandlerService) {
+              httpErrorHandler: HttpErrorHandlerService) {
     this.handleError = httpErrorHandler.createHandleError('UserService');
   }
 
 
   getWorkoutProgramsPublic(): Observable<WorkoutProgramPublic[]> {
-    
+
     return this.http.get<WorkoutProgramPublic[]>(this.workoutProgramPublicUrl)
       .pipe(
-        
-      )
+
+      );
   }
 }

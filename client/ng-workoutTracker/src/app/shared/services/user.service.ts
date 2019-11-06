@@ -15,13 +15,6 @@ interface LoginResponse {
   };
 }
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    // tslint:disable-next-line: max-line-length
-    Authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNWRjMjk3MDJlZGRlYjMzOGQ0YWI1MDhkIiwiaWF0IjoxNTczMDQ1ODQ1LCJleHAiOjE1NzMxMzIyNDV9.xHdwJh7cqPJL68w0J7kQEpW_YPB9wJ__N0qtcOvtU3s'
-    // 'Access-Control-Allow-Origin':'*'
-  })
-};
 
 @Injectable({
   providedIn: 'root'
@@ -38,8 +31,11 @@ export class UserService {
     this.handleError = httpErrorHandler.createHandleError('UserService');
   }
 
-  getUser(userid): Observable<LoginUser> {
+  getUser(userid): any {
     const url = `${this.userUrl}/${userid}`; // GET api/v1/user/:userid
-    return this.http.get<LoginUser>(url, httpOptions);
+    this.http.get<User>(url).subscribe(data => {
+      console.log('getUser(userid) returned data:')
+      console.log(data);
+    });
   }
 }

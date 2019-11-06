@@ -23,11 +23,6 @@ export class UserLoginComponent implements OnInit {
   login() {
     this.authService.login(this.user);
     const url = `/user/${this.authService.getUserId()}`;
-    console.log("NAVIGATING");
-    console.log(url);
     this.router.navigateByUrl(url);
   }
-
-
 }
-
