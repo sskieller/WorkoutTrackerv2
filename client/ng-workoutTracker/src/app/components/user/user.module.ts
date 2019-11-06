@@ -35,7 +35,7 @@ import { AuthGuard } from 'src/app/shared/services';
       { path: '', pathMatch: 'full', redirectTo: 'login' },
       { path: 'new', component: UserRegistrationComponent },
       { path: 'login', component: UserLoginComponent },
-      { path: ':userid', component: UserPageComponent, canActivate: [AuthGuard] },
+      { path: ':userid', component: UserPageComponent},//, canActivate: [AuthGuard] },
       {
         path: ':userid/workoutprogram',
         children: [
