@@ -3,7 +3,7 @@ import { UserService, AuthenticationService } from 'src/app/shared/services';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { User } from 'src/app/shared/components/models';
+import { User, UserGet } from 'src/app/shared/components/models';
 
 @Component({
   selector: 'wt-user-page',
@@ -12,7 +12,7 @@ import { User } from 'src/app/shared/components/models';
 })
 export class UserPageComponent implements OnInit {
   selectedId: number;
-  user$: Observable<User>;
+  user$: UserGet;
 
   username: string;
 
@@ -22,7 +22,10 @@ export class UserPageComponent implements OnInit {
     private authService: AuthenticationService
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     const id = this.route.snapshot.paramMap.get('userid');
+
+    this.user$ = this.userService.getUser(id);
+    console.log(this.user$);
   }
 }

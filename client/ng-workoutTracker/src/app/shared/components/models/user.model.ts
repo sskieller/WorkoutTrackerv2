@@ -1,12 +1,16 @@
 import { WorkoutProgram } from '.';
 
+export interface UserGet {
+  firstName: string;
+  lastName: string;
+  username: string;
+  password: string;
+}
+
 export class User {
   // tslint:disable-next-line: variable-name
-  _id: string;
-  name: {
-    firstName: string;
-    lastName: string;
-  };
+  firstName: string;
+  lastName: string;
   username: string;
   password: string;
   workoutPrograms: [WorkoutProgram];

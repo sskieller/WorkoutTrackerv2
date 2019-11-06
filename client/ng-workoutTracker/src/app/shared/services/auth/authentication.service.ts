@@ -35,9 +35,9 @@ export class AuthenticationService {
       const token = this.getToken();
       const payload = JSON.parse(window.atob(token.split('.')[1]));
       const user = new User();
-      user.name.firstName = payload.name.firstName;
-      user.name.lastName = payload.name.lastName;
-      user._id = payload._id;
+      user.firstName = payload.name.firstName;
+      user.lastName = payload.name.lastName;
+      // user._id = payload._id;
       user.username = payload.username;
       user.workoutPrograms = payload.workoutProgram;
 
