@@ -13,7 +13,6 @@ const getWorkoutProgramParams = body => {
 
 module.exports = {
   getAllWorkoutProgram: (req, res, next) => {
-	  console.log("RUNNING WORKOUT PROGRAM FIND");
     WorkoutProgram.find()
 	//   .populate("exercises")
       //   .populate("activities")
@@ -22,8 +21,6 @@ module.exports = {
         populate: { path: "exercises" }
       })
       .then(workoutProgram => {
-		console.log("PROGRAMS")
-        console.log(workoutProgram);
         res.json({
           workoutProgram
         });

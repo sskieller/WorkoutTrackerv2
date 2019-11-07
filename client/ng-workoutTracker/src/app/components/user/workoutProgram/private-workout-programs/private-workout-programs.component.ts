@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { WorkoutProgramService } from 'src/app/shared/services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IWorkoutProgramPrivate } from 'src/app/shared/components/models';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'wt-private-workout-programs',
@@ -10,29 +9,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./private-workout-programs.component.scss']
 })
 export class PrivateWorkoutProgramsComponent implements OnInit {
-  workoutPrograms$: IWorkoutProgramPrivate[] =
-    [{
-      name: 'testname',
-      description: 'test description',
-      exercises:
-        [{
-          name: 'testex name',
-          description: 'testex desc',
-          sets: 3,
-          repstime: '2 sec'
-        }],
-      activities: [{
-        name: 'name',
-        description: 'desc',
-        woActivities:
-          [{
-            name: 'ac name',
-            description: 'ac desc',
-            sets: 4,
-            repstime: 'ac repstime'
-          }]
-      }]
-    }];
+  workoutPrograms$: IWorkoutProgramPrivate[];
 
   userId: string;
 

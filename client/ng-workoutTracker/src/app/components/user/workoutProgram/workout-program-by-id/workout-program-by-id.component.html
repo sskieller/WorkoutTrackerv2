@@ -1,1 +1,47 @@
-<p>workout-program-by-id works!</p>
+
+<h1 mat-dialog-title class="text-caption">
+  Workout Program
+</h1>
+<a (click)="gotoCreateActivity()">
+  <button mat-button >Create activity</button>
+</a>
+
+<section mat-dialog-content>
+  <mat-list>
+    <mat-list-item>
+      <mat-icon mat-list-icon>person</mat-icon>
+      <h3 matLine class="text-caption">{{ convWorkoutProgram[0].value.name }}</h3>
+      <p matLine>
+        <span class="text-caption">Name</span>
+      </p>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon mat-list-icon>person</mat-icon>
+      <h3 matLine class="text-caption">{{ convWorkoutProgram[0].value.description }}</h3>
+      <p matLine>
+        <span class="text-caption">Description</span>
+      </p>
+    </mat-list-item>
+    <ng-container *ngFor="let exercise of convWorkoutProgram[0].value.exercises">
+        <mat-card style="margin:10px">
+          <mat-list-item>
+            <h3 matLine>{{ exercise.name }}</h3>
+            <p matLine>
+              <span>{{ exercise.description }}</span>
+            </p>
+          </mat-list-item>
+
+          <mat-list-item>
+            <p>
+              <span>Sets: {{ exercise.sets }}</span>
+            </p>
+          </mat-list-item>
+          <mat-list-item>
+            <p>
+              <span> Reps or Time: {{ exercise.repstime }} </span>
+            </p>
+          </mat-list-item>
+        </mat-card>
+      </ng-container>
+  </mat-list>
+</section>
