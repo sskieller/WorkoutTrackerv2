@@ -12,17 +12,21 @@ import { User, UserGet } from 'src/app/shared/components/models';
 })
 export class UserPageComponent implements OnInit {
   selectedId: number;
-  user$: User;
+  user$: UserGet;
 
   username: string;
 
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
-    private authService: AuthenticationService
   ) {
     console.log('constructing userpage');
-    this.user$ = new User();
+    this.user$ = {
+      firstName: '',
+      lastName: '',
+      username: '',
+      password: ''
+    };
   }
 
   async ngOnInit() {
@@ -30,13 +34,15 @@ export class UserPageComponent implements OnInit {
 
     this.userService.getUser(id)
       .subscribe((data: UserGet) => {
+        console.log(data);
+        // this.user$ = data;
         this.user$ = {
           firstName: data.firstName,
           lastName: data.lastName,
           username: data.username,
           password: data.password,
-          workoutPrograms: data.workoutPrograms
         };
       });
+
   }
 }

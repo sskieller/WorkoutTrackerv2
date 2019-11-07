@@ -4,14 +4,14 @@
     <mat-tab label="User Details" class="text-caption">
       <mat-list>
         <mat-list-item>
-          <mat-icon mat-list-icon>info</mat-icon>
+          <mat-icon mat-list-icon>person</mat-icon>
           <h3 matLine class="text-caption">{{ user$.firstName }}</h3>
           <p matLine>
             <span class="text-caption">First name</span>
           </p>
         </mat-list-item>
         <mat-list-item>
-          <mat-icon mat-list-icon>info</mat-icon>
+          <mat-icon mat-list-icon>person</mat-icon>
           <h3 matLine class="text-caption">{{ user$.lastName }}</h3>
           <p matLine>
             <span class="text-caption">Last name</span>
@@ -30,10 +30,9 @@
         </mat-list-item>
         <mat-list-item>
             <mat-icon mat-list-icon>info</mat-icon>
-            <h3 matLine *ngIf=(user$.workoutPrograms) class="text-caption">Yes</h3>
-            <h3 matLine *ngIf=!(user$.workoutPrograms) class="text-caption">No</h3>
+            <h3 matLine class="text-caption">Im just a filler :D</h3>
             <p matLine>
-              <span class="text-caption" class="text-caption">Does user have workout programs</span>
+              <span class="text-caption" class="text-caption">Filler</span>
             </p>
           </mat-list-item>
       </mat-list>

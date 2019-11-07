@@ -1,11 +1,10 @@
-import { WorkoutProgram } from '.';
+import { WorkoutProgram, IWorkoutProgram } from '.';
 
 export interface UserGet {
   firstName: string;
   lastName: string;
   username: string;
   password: string;
-  workoutPrograms: [WorkoutProgram];
 }
 
 export class User {

@@ -188,9 +188,16 @@ module.exports = {
             firstName: user.name.firstName,
             lastName: user.name.lastName,
             username: user.username,
-            password: user.password,
-            workoutPrograms: user.workoutPrograms
+			password: user.password,
+			workoutPrograms: user.workoutPrograms.forEach(element => {
+				this.workoutPrograms += element;
+			})
+            // workoutPrograms: user.workoutPrograms
 		  };
+		  console.log("USER")
+		  console.log(user);
+		  console.log("DATA")
+		  console.log(data);
           res.json(data);
         });
     }
