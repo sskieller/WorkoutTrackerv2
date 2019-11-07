@@ -3,10 +3,25 @@
 :host {
   display: block;
   height: 100%;
+
 }
 
-mat-sidenav-container {
-  height: 100%;
+.app-toolbar {
+  display: block;
+  height: 10%;
+  width: 100%;
+}
+
+.app-router {
+  display: block;
+  width: 100%;
+  height: 70%;
+}
+
+.app-message {
+  display: block;
+  width: 100%;
+  height: 20%;
 }
 
 .toolbar {
@@ -14,15 +29,10 @@ mat-sidenav-container {
   position: relative;
 }
 
-.toolbar__logo-title-group {
+.toolbar__title-group {
   position: absolute;
   right: 50%;
   left: 50%;
-}
-
-.toolbar__logo {
-  height: 32px;
-  margin-right: 16px;
 }
 
 .toolbar__title {
@@ -32,10 +42,38 @@ mat-sidenav-container {
   text-decoration: none;
 }
 
-.toolbar__icon-button {
-  color: mat-color($wt-foreground, icon);
+.toolbar__login-logout-signup-group {
+  color: mat-color($wt-foreground, text);
+
 }
 
-.toolbar__shopping-cart-button {
-  margin-right: 8px;
+.toolbar__login-signup-logout {
+  color: mat-color($wt-foreground, text);
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 600;
+  text-decoration: none;
+
+  width: 80px;
 }
+
+.toolbar__programs-button {
+  color: mat-color($wt-foreground, text);
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.toolbar__home-button {
+  color: mat-color($wt-foreground, text);
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.toolbar__userpage-button {
+  color: mat-color($wt-foreground, text);
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 600;
+  text-decoration: none;
+}
+

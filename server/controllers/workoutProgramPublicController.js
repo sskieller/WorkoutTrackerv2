@@ -7,6 +7,7 @@ module.exports = {
 		WorkoutProgram.find()
 			// .populate( "exercises" )
 			.then( ( programs ) => {
+				// console.log((programs))
 				res.json( {
 					programs,
 				} );

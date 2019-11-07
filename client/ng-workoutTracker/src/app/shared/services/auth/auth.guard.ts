@@ -7,22 +7,21 @@ import { AuthenticationService } from './authentication.service';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-constructor(private authService: AuthenticationService, private router: Router) {}
+  constructor(private authService: AuthenticationService, private router: Router,
+
+  ) {
+  }
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-      const url = state.url;
 
-      if (this.authService.isLoggedIn) {
-        console.log('GO FORWARD');
-        return true; }
-      // Store attempted URL for redirecting
-      this.authService.redirectUrl = url;
-      // navigate to the login page
-      console.log('IM REROUTING');
-      this.router.navigate(['user/login']);
-      return false;
+    if (this.authService.isUserLoggedIn$) {
+      return true;
+    }
+    // navigate to the login page
+    this.router.navigateByUrl('user/login');
+    return false;
   }
 }

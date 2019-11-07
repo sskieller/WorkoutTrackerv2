@@ -21,7 +21,6 @@ export class PublicWorkoutProgramsComponent implements OnInit {
 
   ngOnInit() {
     this.getWorkouts();
-    console.log('I INITIATED');
   }
 
 }

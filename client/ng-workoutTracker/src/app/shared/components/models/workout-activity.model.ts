@@ -11,3 +11,16 @@ export class woActivity {
   sets: number;
   repstime: string;
 }
+
+export interface IWorkoutActivity {
+  name: string;
+  description: string;
+  woActivities: [IwoActivity];
+}
+
+export interface IwoActivity {
+  name: string;
+  description: string;
+  sets: number;
+  repstime: string;
+}

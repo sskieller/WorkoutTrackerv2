@@ -1,3 +1,96 @@
-<wt-toolbar></wt-toolbar>
+<mat-card>
+  <span fxFlex></span>
+  <mat-toolbar class="toolbar">
+    <mat-toolbar-row class="toolbar__row">
+      <div class="toolbar__title-group" fxLayout fxLayoutAlign="center center">
+        <a class="toolbar__title" [routerLink]="['/home']">Workout Tracker</a>
+      </div>
 
-<!-- <router-outlet></router-outlet> -->
+      <div fxFlex></div>
+
+      <div class="toolbar__login-logout-signup-group">
+        <div *ngIf="isLoggedIn | async">
+          <a>
+            <button
+              (click)="logoutUser()"
+              mat-stroked-button
+              class="toolbar__login-signup-logout"
+            >
+              Logout
+            </button>
+          </a>
+        </div>
+        <div *ngIf="!(isLoggedIn | async)">
+          <a>
+            <button
+              (click)="gotoUserRegistration()"
+              mat-stroked-button
+              class="toolbar__login-signup-logout"
+            >
+              Signup
+            </button>
+          </a>
+          <a>
+            <button
+              (click)="gotoUserLogin('/user/login')"
+              mat-stroked-button
+              class="toolbar__login-signup-logout"
+            >
+              Login
+            </button>
+          </a>
+        </div>
+      </div>
+    </mat-toolbar-row>
+
+    <mat-toolbar-row
+      class="toolbar__row"
+      fxLayout
+      fxLayoutAlign="center center"
+    >
+
+      <a [routerLink]="['/home']">
+        <button
+          mat-stroked-button
+          class="toolbar__home-button"
+          [routerLink]="['/home']"
+        >
+          Home
+        </button>
+      </a>
+
+      <div *ngIf="(isLoggedIn | async)">
+          <a>
+              <button
+                (click)="gotoWorkoutProgramsPrivate()"
+                mat-stroked-button
+                class="toolbar__programs-button"
+              >
+                Workout Programs
+              </button>
+            </a>
+            <a>
+              <button
+                (click)="gotoUserPageById()"
+                mat-stroked-button
+                class="toolbar__userpage-button"
+              >
+                Userpage
+              </button>
+            </a>
+      </div>
+      <div *ngIf="!(isLoggedIn | async)">
+          <a>
+              <button (click)="gotoWorkoutProgramsPublic()"
+              mat-stroked-button class="toolbar__programs-button">
+                Workout Programs
+              </button>
+            </a>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</mat-card>
+
+<mat-card>
+  <router-outlet></router-outlet>
+</mat-card>
