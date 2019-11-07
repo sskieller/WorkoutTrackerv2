@@ -5,7 +5,7 @@ const workoutProgramController = require("../controllers/workoutProgramControlle
 
 // Index for /user/:userId/workoutProgram
 router.get(
-  "/:userId/workoutProgram/",
+  "/:userId/workoutprogram/",
   helperFunctions.verifyJWT,
   workoutProgramController.getAllWorkoutProgram,
   helperFunctions.respondJSON,

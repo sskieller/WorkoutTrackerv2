@@ -13,12 +13,19 @@ const getWorkoutProgramParams = body => {
 
 module.exports = {
   getAllWorkoutProgram: (req, res, next) => {
+	  console.log("RUNNING WORKOUT PROGRAM FIND");
     WorkoutProgram.find()
-      .populate("exercises", "activities")
-      .then(programs => {
-        console.log(programs);
+      .populate("exercises")
+      //   .populate("activities")
+    //   .populate({
+    //     path: "exercises",
+    //     populate: { path: "" }
+    //   })
+      .then(workoutProgram => {
+		console.log("PROGRAMS")
+        console.log(workoutProgram);
         res.json({
-          programs
+          workoutProgram
         });
       })
       .catch(err => {
@@ -39,7 +46,7 @@ module.exports = {
         populate: { path: "exercises" }
       })
       .then(programs => {
-		console.log("PROGRAMS");
+        console.log("PROGRAMS");
         console.log(programs.workoutPrograms);
         res.json(programs.workoutPrograms);
       });
