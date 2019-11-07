@@ -1,9 +1,8 @@
 import { Observable } from 'rxjs';
-import { UserId } from './../components/models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
-import { IWorkoutProgram } from '../components/models';
+import { IWorkoutProgram, IWorkoutProgramPrivate } from '../components/models';
 import { AuthenticationService } from './auth';
 
 @Injectable({
@@ -12,15 +11,16 @@ import { AuthenticationService } from './auth';
 export class WorkoutProgramService {
   workoutProgramsUser: IWorkoutProgram;
 
-private workoutProgramUrl = `${environment.API_BASE_URL}/user/${this.authService.getUserId()}/workoutProgram`;
+  private getUrl(userId) {
+    return `${environment.API_BASE_URL}/user/${userId}/workoutProgram`;
+  }
 
   constructor(
-    private authService: AuthenticationService,
     private http: HttpClient
     ) { }
 
-    getWorkoutProgramsForUser(): Observable<IWorkoutProgram> {
-      const url = `${this.workoutProgramUrl}/user`;
-      return this.http.get<IWorkoutProgram>(url);
+    getWorkoutProgramsPrivate(userId): Observable<IWorkoutProgramPrivate[]> {
+      const url = `${this.getUrl(userId)}/workoutProgram`;
+      return this.http.get<IWorkoutProgramPrivate[]>(url);
     }
 }

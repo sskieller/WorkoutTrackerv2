@@ -11,10 +11,7 @@ import { User, UserGet } from 'src/app/shared/components/models';
   styleUrls: ['./user-page.component.scss']
 })
 export class UserPageComponent implements OnInit {
-  selectedId: number;
   user$: UserGet;
-
-  username: string;
 
   constructor(
     private userService: UserService,
