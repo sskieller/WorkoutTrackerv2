@@ -20,6 +20,6 @@ export class WorkoutProgramPublicService {
 
 
   getWorkoutProgramsPublic(): Observable<IWorkoutProgramPublic[]> {
-    return this.http.get<IWorkoutProgramPublic[]>(this.workoutProgramPublicUrl)
+    return this.http.get<IWorkoutProgramPublic[]>(this.workoutProgramPublicUrl);
   }
 }

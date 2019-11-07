@@ -9,20 +9,16 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./public-workout-programs.component.scss']
 })
 export class PublicWorkoutProgramsComponent implements OnInit {
-  
+
   workoutPrograms: IWorkoutProgramPublic[] = [{name:"TestProgramName", description:"TestDescription"}];
-  workoutProgramsSubscription: Subscription;
 
   constructor(private workoutService: WorkoutProgramPublicService) { }
 
   ngOnInit() {
-    this.workoutProgramsSubscription = this.workoutService.getWorkoutProgramsPublic()
+    this.workoutService.getWorkoutProgramsPublic()
     .subscribe((res: any) => {
       this.workoutPrograms = res.programs;
     });
   }
 
-  ngOnDestroy(): void{
-    this.workoutProgramsSubscription.unsubscribe();
-  }
 }

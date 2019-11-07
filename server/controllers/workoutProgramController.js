@@ -15,12 +15,12 @@ module.exports = {
   getAllWorkoutProgram: (req, res, next) => {
 	  console.log("RUNNING WORKOUT PROGRAM FIND");
     WorkoutProgram.find()
-      .populate("exercises")
+	//   .populate("exercises")
       //   .populate("activities")
-    //   .populate({
-    //     path: "exercises",
-    //     populate: { path: "" }
-    //   })
+      .populate({
+        path: "exercises",
+        populate: { path: "exercises" }
+      })
       .then(workoutProgram => {
 		console.log("PROGRAMS")
         console.log(workoutProgram);
