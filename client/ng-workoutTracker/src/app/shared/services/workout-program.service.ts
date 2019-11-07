@@ -20,7 +20,7 @@ export class WorkoutProgramService {
     ) { }
 
     getWorkoutProgramsPrivate(userId): Observable<IWorkoutProgramPrivate[]> {
-      const url = `${this.getUrl(userId)}/workoutProgram`;
+      const url = `${this.getUrl(userId)}`;
       return this.http.get<IWorkoutProgramPrivate[]>(url);
     }
 }
