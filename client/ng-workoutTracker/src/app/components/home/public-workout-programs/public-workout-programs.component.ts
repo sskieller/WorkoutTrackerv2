@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { WorkoutProgramPublicService } from 'src/app/shared/services';
 
 @Component({
   selector: 'wt-public-workout-programs',
@@ -6,10 +7,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./public-workout-programs.component.scss']
 })
 export class PublicWorkoutProgramsComponent implements OnInit {
+  
+  workoutPrograms: any;
 
-  constructor() { }
+  constructor(private workoutService: WorkoutProgramPublicService) { }
+
+  Q(): void {
+    this.workoutPrograms = this.workoutService.getWorkouts();
+  }
+
+
+  
 
   ngOnInit() {
+    this.getWorkouts();
     console.log('I INITIATED');
   }
 
