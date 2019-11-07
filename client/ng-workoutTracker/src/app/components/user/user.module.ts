@@ -19,7 +19,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material';
 import { AuthGuard } from 'src/app/shared/services';
 import { MatListModule } from '@angular/material/list';
-
+import {MatTableModule} from '@angular/material/table';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatIconModule} from '@angular/material/icon';
 const routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: 'new', component: UserRegistrationComponent },
@@ -66,6 +68,9 @@ const routes = [
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,
+    MatTableModule,
+    MatTabsModule,
+    MatIconModule,
     RouterModule.forChild(routes),
   ],
 })

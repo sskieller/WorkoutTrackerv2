@@ -160,7 +160,8 @@ module.exports = {
               res.json({
                 success: true,
                 token: signedToken,
-                userId: user._id
+                userId: user._id,
+                user: user
               });
               // next(); // Call next middleware function if user found
             } else {
@@ -183,14 +184,14 @@ module.exports = {
           populate: { path: "workoutPrograms" }
         })
         .then(user => {
-          res.json({
-            firstName: user.firstName,
-            lastName: user.lastName,
+          data = {
+            firstName: user.name.firstName,
+            lastName: user.name.lastName,
             username: user.username,
-            password: user.password
-          });
-          // res.locals.user = user;
-          // next();
+            password: user.password,
+            workoutPrograms: user.workoutPrograms
+		  };
+          res.json(data);
         });
     }
   },

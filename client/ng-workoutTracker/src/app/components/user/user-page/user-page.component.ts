@@ -12,7 +12,7 @@ import { User, UserGet } from 'src/app/shared/components/models';
 })
 export class UserPageComponent implements OnInit {
   selectedId: number;
-  user$: UserGet;
+  user$: User;
 
   username: string;
 
@@ -20,12 +20,23 @@ export class UserPageComponent implements OnInit {
     private userService: UserService,
     private route: ActivatedRoute,
     private authService: AuthenticationService
-  ) { }
+  ) {
+    console.log('constructing userpage');
+    this.user$ = new User();
+  }
 
   async ngOnInit() {
     const id = this.route.snapshot.paramMap.get('userid');
 
-    this.user$ = this.userService.getUser(id);
-    console.log(this.user$);
+    this.userService.getUser(id)
+      .subscribe((data: UserGet) => {
+        this.user$ = {
+          firstName: data.firstName,
+          lastName: data.lastName,
+          username: data.username,
+          password: data.password,
+          workoutPrograms: data.workoutPrograms
+        };
+      });
   }
 }

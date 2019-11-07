@@ -1,0 +1,14 @@
+@import '../../../../styles/theme';
+
+:host {
+  display: block;
+  height: 100%;
+
+}
+
+.text-caption {
+  color: mat-color($wt-foreground, text);
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 600;
+  text-decoration: none;
+}

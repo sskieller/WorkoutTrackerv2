@@ -15,7 +15,6 @@ interface LoginResponse {
   };
 }
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -30,22 +29,23 @@ export class AuthenticationService {
   isUserLoggedIn$ = this.isLoginSubject.asObservable();
 
 
-  public currentUser(): User {
-    if (this.isLoggedIn()) {
-      const token = this.getToken();
-      const payload = JSON.parse(window.atob(token.split('.')[1]));
-      const user = new User();
-      user.firstName = payload.name.firstName;
-      user.lastName = payload.name.lastName;
-      // user._id = payload._id;
-      user.username = payload.username;
-      user.workoutPrograms = payload.workoutProgram;
+  // public currentUser(): User {
+  //   if (this.isLoggedIn()) {
+  //     const token = this.getToken();
+  //     const payload = JSON.parse(window.atob(token.split('.')[1]));
+  //     const user = new User();
+  //     console.log(payload);
+  //     user.firstName = payload.name.firstName;
+  //     user.lastName = payload.name.lastName;
+  //     // user._id = payload._id;
+  //     user.username = payload.username;
+  //     user.workoutPrograms = payload.workoutProgram;
 
-      return user;
-    } else {
-      return;
-    }
-  }
+  //     return user;
+  //   } else {
+  //     return;
+  //   }
+  // }
 
   isLoggedIn(): Observable<boolean> {
     return this.isLoginSubject.asObservable();

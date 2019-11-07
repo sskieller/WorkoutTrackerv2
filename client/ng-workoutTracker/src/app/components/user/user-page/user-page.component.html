@@ -1,7 +1,42 @@
-<p>user-page works!</p>
-<mat-list role="list">
-  <mat-list-item role="listitem">1</mat-list-item>
-  <mat-list-item role="listitem">2</mat-list-item>
-  <mat-list-item role="listitem">3</mat-list-item>
-  <mat-list-item role="listitem">4</mat-list-item>
-</mat-list>
+<h1 mat-dialog-title class="text-caption">User Details</h1>
+<section mat-dialog-content>
+  <mat-tab-group>
+    <mat-tab label="User Details" class="text-caption">
+      <mat-list>
+        <mat-list-item>
+          <mat-icon mat-list-icon>info</mat-icon>
+          <h3 matLine class="text-caption">{{ user$.firstName }}</h3>
+          <p matLine>
+            <span class="text-caption">First name</span>
+          </p>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon mat-list-icon>info</mat-icon>
+          <h3 matLine class="text-caption">{{ user$.lastName }}</h3>
+          <p matLine>
+            <span class="text-caption">Last name</span>
+          </p>
+        </mat-list-item>
+      </mat-list>
+    </mat-tab>
+    <mat-tab label="Account Details" class="text-caption">
+      <mat-list>
+        <mat-list-item>
+          <mat-icon mat-list-icon>info</mat-icon>
+          <h3 matLine class="text-caption">{{ user$.username }}</h3>
+          <p matLine>
+            <span class="text-caption">Username</span>
+          </p>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-icon mat-list-icon>info</mat-icon>
+            <h3 matLine *ngIf=(user$.workoutPrograms) class="text-caption">Yes</h3>
+            <h3 matLine *ngIf=!(user$.workoutPrograms) class="text-caption">No</h3>
+            <p matLine>
+              <span class="text-caption" class="text-caption">Does user have workout programs</span>
+            </p>
+          </mat-list-item>
+      </mat-list>
+    </mat-tab>
+  </mat-tab-group>
+</section>

@@ -5,6 +5,7 @@ export interface UserGet {
   lastName: string;
   username: string;
   password: string;
+  workoutPrograms: [WorkoutProgram];
 }
 
 export class User {
