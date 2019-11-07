@@ -19,9 +19,10 @@ export class WorkoutProgramService {
     private http: HttpClient
     ) { }
 
-    /*
-    * returns all workout programs in system with more info than public
-    */
+    /**
+     * returns all workout programs in system with more info than public
+     * @param userId
+     */
     getWorkoutProgramsPrivate(userId): Observable<IWorkoutProgramPrivate[]> {
       return this.http.get<IWorkoutProgramPrivate[]>(this.getUrl(userId));
     }
