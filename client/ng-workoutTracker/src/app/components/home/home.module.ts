@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [HomeComponent, PublicWorkoutProgramsComponent],
@@ -18,6 +19,7 @@ import { MatInputModule } from '@angular/material';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
+    MatListModule,
 
     RouterModule.forChild([
       { path: '', pathMatch: 'full', redirectTo: 'home' },

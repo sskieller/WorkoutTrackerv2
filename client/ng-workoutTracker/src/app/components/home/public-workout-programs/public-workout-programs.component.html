@@ -1,21 +1,10 @@
-<p>public-workout-programs wor2ks!</p>
+<p>public-workout-programs works!</p>
 
-<!-- two line list -->
 <mat-list>
-    <mat-list-item *ngFor="let message of messages">
-      <h3 matLine> {{message.from}} </h3>
-      <p matLine>
-        <span> {{message.subject}} </span>
-        <span class="demo-2"> -- {{message.content}} </span>
-      </p>
-    </mat-list-item>
-  </mat-list>
-  
-  <!-- three line list -->
-  <mat-list>
-    <mat-list-item *ngFor="let message of messages">
-      <h3 matLine> {{message.from}} </h3>
-      <p matLine> {{message.subject}} </p>
-      <p matLine class="demo-2"> {{message.content}} </p>
-    </mat-list-item>
-  </mat-list>
+  <mat-list-item *ngFor="let program of workoutPrograms">
+    <h3 matLine> {{ program.name }} </h3>
+    <p matLine>
+      <span> {{ program.description }} </span>
+    </p>
+  </mat-list-item>
+</mat-list>
