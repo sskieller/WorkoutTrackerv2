@@ -36,4 +36,8 @@ export class WorkoutProgramByIdComponent implements OnInit {
   gotoCreateActivity() {
     this.router.navigateByUrl(`user/${this.userId}/workoutprogram/${this.workoutProgramId}/workoutactivity/new`);
   }
+
+  gotoActivities() {
+    this.router.navigateByUrl(`user/${this.userId}/workoutprogram/${this.workoutProgramId}/workoutactivity`);
+  }
 }
