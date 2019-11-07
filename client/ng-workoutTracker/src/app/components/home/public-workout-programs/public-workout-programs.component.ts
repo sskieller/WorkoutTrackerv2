@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { WorkoutProgramPublicService } from 'src/app/shared/services';
 import { WorkoutProgramPublic } from 'src/app/shared/components/models/workout-program.model';
 import { Subscription } from 'rxjs';
+import { debug } from 'util';
 
 @Component({
   selector: 'wt-public-workout-programs',
@@ -16,11 +17,16 @@ export class PublicWorkoutProgramsComponent implements OnInit {
   constructor(private workoutService: WorkoutProgramPublicService) { }
 
   ngOnInit() {
-    this.workoutService.getWorkoutProgramsPublic();
-
     this.workoutProgramsSubscription = this.workoutService.getWorkoutProgramsPublic()
     .subscribe((programs: WorkoutProgramPublic[]) => {
+      
+      console.log('all workout programs: ' + programs);
+      
       this.workoutPrograms = programs;
     });
+  }
+
+  ngOnDestroy(): void{
+    this.workoutProgramsSubscription.unsubscribe();
   }
 }
