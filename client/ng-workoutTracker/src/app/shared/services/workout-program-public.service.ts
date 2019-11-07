@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { HandleError, HttpErrorHandlerService } from './http-error-handler.service';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { WorkoutProgramPublic, IWorkoutProgramPublic } from '../components/models';
+import { IWorkoutProgramPublic } from '../components/models';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +20,6 @@ export class WorkoutProgramPublicService {
 
 
   getWorkoutProgramsPublic(): Observable<IWorkoutProgramPublic[]> {
-    return this.http.get<IWorkoutProgramPublic[]>(this.workoutProgramPublicUrl);
+    return this.http.get<IWorkoutProgramPublic[]>(this.workoutProgramPublicUrl)
   }
 }
