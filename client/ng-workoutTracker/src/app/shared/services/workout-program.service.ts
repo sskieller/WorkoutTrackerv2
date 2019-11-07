@@ -27,9 +27,10 @@ export class WorkoutProgramService {
       return this.http.get<IWorkoutProgramPrivate[]>(this.getUrl(userId));
     }
 
-    /*
-    * returns the workout programs solely connected to user
-    */
+    /**
+     * returns the workout programs solely connected to user
+     * @param userId
+     */
     getWorkoutProgramsForUser(userId): Observable<IWorkoutProgram[]> {
       const url = `${this.getUrl(userId)}/user`;
       return this.http.get<IWorkoutProgram[]>(url);
