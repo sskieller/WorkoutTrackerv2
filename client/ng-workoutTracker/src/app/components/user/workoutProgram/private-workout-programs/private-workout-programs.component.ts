@@ -19,16 +19,11 @@ export class PrivateWorkoutProgramsComponent implements OnInit {
   }
 
   async ngOnInit() {
-    console.log('private workout programs init');
     const userId = this.route.snapshot.paramMap.get('userid');
-    console.log(userId);
 
     this.workoutProgramService.getWorkoutProgramsPrivate(userId)
       .subscribe((data: IWorkoutProgramPrivate[]) => {
-        console.log(data);
-        // this.workoutPrograms$ = data;
-        // console.log(this.workoutPrograms$);
+        this.workoutPrograms$ = data;
       });
   }
-
 }
