@@ -40,7 +40,6 @@ export class WorkoutProgramByIdComponent implements OnInit, OnDestroy {
         this.workoutProgram$ = data;
         this.exercises = data.program.exercises;
         console.log(data);
-        // this.convWorkoutProgram = Object.keys(data).map(key => ({ type: key, value: data[key] }));
       });
   }
 
