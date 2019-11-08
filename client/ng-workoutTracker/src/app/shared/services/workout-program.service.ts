@@ -1,8 +1,8 @@
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
-import { IWorkoutProgram, IWorkoutProgramPrivate } from '../components/models';
+import { IWorkoutProgram, IWorkoutProgramPrivate, IWorkoutExercise } from '../components/models';
 import { AuthenticationService } from './auth';
 import { debug } from 'util';
 
@@ -11,6 +11,12 @@ import { debug } from 'util';
 })
 export class WorkoutProgramService {
   workoutProgramsUser: IWorkoutProgram;
+  private exercises: IWorkoutExercise[] = [];
+  private exercisesUpdated = new Subject<IWorkoutExercise[]>();
+
+  getExerciseUpdateListener(){
+    return this.exercisesUpdated.asObservable();
+  }
 
   private getUrl(userId) {
     return `${environment.API_BASE_URL}/user/${userId}/workoutProgram`;
@@ -66,6 +72,10 @@ export class WorkoutProgramService {
      * @param workoutProgram
      */
     addExerciseToProgram(userId, workoutProgramId, workoutProgram): Observable<IWorkoutProgram> {
+
+      this.exercises.push(workoutProgram.exercises[0])
+      this.exercisesUpdated.next([...this.exercises]);
+
       const url = `${this.getUrl(userId)}/${workoutProgramId}`;
       return this.http.put<IWorkoutProgram>(url, workoutProgram);
     }

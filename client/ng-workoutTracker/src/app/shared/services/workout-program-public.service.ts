@@ -18,7 +18,6 @@ export class WorkoutProgramPublicService {
     this.handleError = httpErrorHandler.createHandleError('UserService');
   }
 
-
   getWorkoutProgramsPublic(): Observable<IWorkoutProgramPublic[]> {
     return this.http.get<IWorkoutProgramPublic[]>(this.workoutProgramPublicUrl);
   }

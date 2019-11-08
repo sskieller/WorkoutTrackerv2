@@ -19,10 +19,10 @@ export class CreateWorkoutProgramComponent {
     }
 
     const exercise: IWorkoutExercise = {
-      name: "Ex1",
-      description: "desc1",
-      repstime: "10",
-      sets: 10
+      name: "a",
+      description: "a",
+      repstime: "1",
+      sets: 1
     }
 
     const workoutProgram: IWorkoutProgram = {

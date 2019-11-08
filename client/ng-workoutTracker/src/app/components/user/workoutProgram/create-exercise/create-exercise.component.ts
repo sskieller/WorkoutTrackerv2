@@ -13,10 +13,6 @@ export class CreateExerciseComponent implements OnInit {
   private userId;
   private workoutProgramId;
 
-  // enteredName = "";
-  // enteredDescription = "";
-  // enteredRepstime = "";
-  // enteredSets = "";
 
   constructor(private workoutProgramService: WorkoutProgramService,
     private route: ActivatedRoute) { }

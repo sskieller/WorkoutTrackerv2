@@ -1,5 +1,12 @@
 
 
+<a (click)="gotoCreateActivity()">
+    <button mat-button >Create activity</button>
+  </a>
+  
+  <a (click)="gotoActivities()">
+      <button mat-button >Go to Activities</button>
+  </a>
 
 <mat-card style="margin-left: 20%; margin-right: 20%;">
   <mat-card-header class="program-name">
@@ -9,46 +16,59 @@
     <h3 matLine>{{ workoutProgram$.program.description }}</h3>
   </mat-card-header>
   <wt-create-exercise></wt-create-exercise>
-</mat-card>
 
-<a (click)="gotoCreateActivity()">
-  <button mat-button >Create activity</button>
-</a>
-
-<a (click)="gotoActivities()">
-    <button mat-button >Go to Activities</button>
-</a>
-
-  <mat-list> 
-    <mat-list-item *ngFor="let exercise of workoutProgram$.program.exercises">
-        <p > {{ exercise.name }} </p>
-        <p > {{ exercise.description }}</p>
-        <p > {{ exercise.repstime }}</p>
-        <p > {{ exercise.sets }}</p>
-    </mat-list-item>
-  </mat-list>
+  <br>
 
   <!-- <table mat-table [dataSource]="workoutProgram$.program.exercises" class="mat-elevation-z8">
-      <ng-container matColumnDef="name">
+      <ng-container matColumnDef="nameCN">
         <th mat-header-cell *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let element"> {{ exercise.name }} </td>
+        <td mat-cell *matCellDef="let exercise"> {{ exercise.name }} </td>
       </ng-container>
     
-      <ng-container matColumnDef="description">
+      <ng-container matColumnDef="descriptionCN">
         <th mat-header-cell *matHeaderCellDef> Description </th>
-        <td mat-cell *matCellDef="let element"> {{ exercise.description }} </td>
+        <td mat-cell *matCellDef="let exercise"> {{ exercise.description }} </td>
       </ng-container>
     
-      <ng-container matColumnDef="repetitions">
+      <ng-container matColumnDef="setsCN">
+          <th mat-header-cell *matHeaderCellDef> Sets </th>
+          <td mat-cell *matCellDef="let exercise"> {{ exercise.sets }} </td>
+        </ng-container>
+
+      <ng-container matColumnDef="repetitionsCN">
         <th mat-header-cell *matHeaderCellDef> Repetitions </th>
-        <td mat-cell *matCellDef="let element"> {{ exercise.repstime }} </td>
-      </ng-container>
-    
-      <ng-container matColumnDef="sets">
-        <th mat-header-cell *matHeaderCellDef> Sets </th>
-        <td mat-cell *matCellDef="let element"> {{ exercise.sets }} </td>
+        <td mat-cell *matCellDef="let exercise"> {{ exercise.repstime }} </td>
       </ng-container>
     
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table> -->
+    </table>
+
+    <br> -->
+
+  <table mat-table [dataSource]="exercises" class="mat-elevation-z8">
+      <ng-container matColumnDef="nameCN">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let exercise"> {{ exercise.name }} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="descriptionCN">
+        <th mat-header-cell *matHeaderCellDef> Description </th>
+        <td mat-cell *matCellDef="let exercise"> {{ exercise.description }} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="setsCN">
+          <th mat-header-cell *matHeaderCellDef> Sets </th>
+          <td mat-cell *matCellDef="let exercise"> {{ exercise.sets }} </td>
+        </ng-container>
+
+      <ng-container matColumnDef="repetitionsCN">
+        <th mat-header-cell *matHeaderCellDef> Repetitions </th>
+        <td mat-cell *matCellDef="let exercise"> {{ exercise.repstime }} </td>
+      </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  </mat-card>
