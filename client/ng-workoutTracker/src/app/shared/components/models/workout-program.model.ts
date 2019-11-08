@@ -25,6 +25,12 @@ export interface IWorkoutProgram {
   exercises: [IWorkoutExercise];
 }
 
+export interface IWorkoutProgramActivities {
+  name: string;
+  description: string;
+  activities: [IWorkoutActivity];
+}
+
 export interface IWorkoutProgramPublic {
   name: string;
   description: string;

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RegisterUser, CreateActivity } from 'src/app/shared/components/models';
-import { AuthenticationService } from 'src/app/shared/services';
-import { Router } from '@angular/router';
+import { AuthenticationService, WorkoutActivityService } from 'src/app/shared/services';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'wt-create-workout-activity',
@@ -10,21 +10,29 @@ import { Router } from '@angular/router';
 })
 export class CreateWorkoutActivityComponent implements OnInit {
 
-  activity: CreateActivity;
+  newActivity: CreateActivity;
+  userId: string;
+  wpId: string;
+
 
   constructor(
     private authService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
+    private activityService: WorkoutActivityService
   ) {
-    this.activity = new CreateActivity();
+    this.newActivity = new CreateActivity();
   }
 
   ngOnInit() {
+    this.userId = this.route.snapshot.paramMap.get('userid');
+    this.wpId = this.route.snapshot.paramMap.get('workoutprogramid');
   }
 
-  registerUser() {
-    const url = `/user/login`;
+  createWorkoutActivity() {
+    this.activityService.createWorkoutActivity(this.userId, this.wpId, this.newActivity).subscribe();
+
+    const url = `/user/${this.userId}/workoutprogram/${this.wpId}/workoutactivity`;
     this.router.navigateByUrl(url);
   }
-
 }
