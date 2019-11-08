@@ -1,6 +1,9 @@
 <h1 mat-dialog-title class="text-caption">
   All programs available with details
 </h1>
+<a (click)=(gotoCreateWorkoutProgram())>
+  <button mat-stroked-button>New program</button>
+</a>
 <section mat-dialog-content>
   <mat-list>
     <ng-container *ngFor="let program of convPrograms[0].value">

@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
 
-    if (this.authService.isUserLoggedIn$) {
+    if (this.authService.isLoggedInLocal()) {
       return true;
     }
     // navigate to the login page
