@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { UserLoginComponent } from './user-login';
 import { UserRegistrationComponent } from './user-registration';
 import { UserPageComponent } from './user-page';
+import { HomeModule } from '../home/home.module';
+
 import {
   WorkoutProgramByIdComponent
   , CreateWorkoutProgramComponent
@@ -22,6 +24,8 @@ import { MatListModule } from '@angular/material/list';
 import {MatTableModule} from '@angular/material/table';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatIconModule} from '@angular/material/icon';
+import {MatGridListModule} from '@angular/material/grid-list';
+
 const routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: 'new', component: UserRegistrationComponent },
@@ -72,6 +76,8 @@ const routes = [
     MatTabsModule,
     MatIconModule,
     RouterModule.forChild(routes),
+    HomeModule,
+    MatGridListModule,
   ],
 })
 export class UserModule { }

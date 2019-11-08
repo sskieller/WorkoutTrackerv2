@@ -1,51 +1,54 @@
 
-<h1 mat-dialog-title class="text-caption">
-  Workout Program
-</h1>
+
+
+<mat-card style="margin-left: 20%; margin-right: 20%;">
+  <mat-card-header class="program-name">
+    <h1 matLine>{{ workoutProgram$.program.name }}</h1>
+  </mat-card-header>
+  <mat-card-header>
+    <h3 matLine>{{ workoutProgram$.program.description }}</h3>
+  </mat-card-header>
+  <wt-create-exercise></wt-create-exercise>
+</mat-card>
+
 <a (click)="gotoCreateActivity()">
   <button mat-button >Create activity</button>
 </a>
 
 <a (click)="gotoActivities()">
     <button mat-button >Go to Activities</button>
-  </a>
+</a>
 
-<section mat-dialog-content>
-  <mat-list>
-    <mat-list-item>
-      <mat-icon mat-list-icon>person</mat-icon>
-      <h3 matLine class="text-caption">{{ convWorkoutProgram[0].value.name }}</h3>
-      <p matLine>
-        <span class="text-caption">Name</span>
-      </p>
+  <mat-list> 
+    <mat-list-item *ngFor="let exercise of workoutProgram$.program.exercises">
+        <p > {{ exercise.name }} </p>
+        <p > {{ exercise.description }}</p>
+        <p > {{ exercise.repstime }}</p>
+        <p > {{ exercise.sets }}</p>
     </mat-list-item>
-    <mat-list-item>
-      <mat-icon mat-list-icon>person</mat-icon>
-      <h3 matLine class="text-caption">{{ convWorkoutProgram[0].value.description }}</h3>
-      <p matLine>
-        <span class="text-caption">Description</span>
-      </p>
-    </mat-list-item>
-    <ng-container *ngFor="let exercise of convWorkoutProgram[0].value.exercises">
-        <mat-card style="margin:10px">
-          <mat-list-item>
-            <h3 matLine>{{ exercise.name }}</h3>
-            <p matLine>
-              <span>{{ exercise.description }}</span>
-            </p>
-          </mat-list-item>
-
-          <mat-list-item>
-            <p>
-              <span>Sets: {{ exercise.sets }}</span>
-            </p>
-          </mat-list-item>
-          <mat-list-item>
-            <p>
-              <span> Reps or Time: {{ exercise.repstime }} </span>
-            </p>
-          </mat-list-item>
-        </mat-card>
-      </ng-container>
   </mat-list>
-</section>
+
+  <!-- <table mat-table [dataSource]="workoutProgram$.program.exercises" class="mat-elevation-z8">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{ exercise.name }} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef> Description </th>
+        <td mat-cell *matCellDef="let element"> {{ exercise.description }} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="repetitions">
+        <th mat-header-cell *matHeaderCellDef> Repetitions </th>
+        <td mat-cell *matCellDef="let element"> {{ exercise.repstime }} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="sets">
+        <th mat-header-cell *matHeaderCellDef> Sets </th>
+        <td mat-cell *matCellDef="let element"> {{ exercise.sets }} </td>
+      </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table> -->

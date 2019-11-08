@@ -26,6 +26,7 @@ import {MatListModule} from '@angular/material/list';
       { path: 'home', component: HomeComponent },
       { path: 'workoutprogram', component: PublicWorkoutProgramsComponent }
     ])
-  ]
+  ],
+  exports: [PublicWorkoutProgramsComponent]
 })
 export class HomeModule { }

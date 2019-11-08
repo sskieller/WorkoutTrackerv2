@@ -63,10 +63,10 @@ export class WorkoutProgramService {
      * adds an exercise to the given program for the given user
      * @param userId
      * @param workoutProgramId
-     * @param workoutExercise
+     * @param workoutProgram
      */
-    addExerciseToProgram(userId, workoutProgramId, workoutExercise): Observable<IWorkoutProgram> {
+    addExerciseToProgram(userId, workoutProgramId, workoutProgram): Observable<IWorkoutProgram> {
       const url = `${this.getUrl(userId)}/${workoutProgramId}`;
-      return this.http.put<IWorkoutProgram>(url, workoutExercise);
+      return this.http.put<IWorkoutProgram>(url, workoutProgram);
     }
 }

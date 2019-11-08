@@ -1,1 +1,49 @@
-<p>create-exercise works!</p>
+<mat-card>
+    <form (submit)="onAddExercise(exerciseForm)" #exerciseForm="ngForm">
+        <mat-form-field>
+            <input 
+            matInput
+            name="name"
+            ngModel
+            required
+            placeholder="Name of exercise"
+            #name="ngModel">
+        </mat-form-field>
+  
+        <mat-form-field>
+            <input 
+                matInput
+                name="description"
+                ngModel
+                required
+                placeholder="Description"
+                #description="ngModel">
+        </mat-form-field>
+  
+        <mat-form-field>
+            <input 
+                matInput
+                name="repstime"
+                ngModel
+                required
+                placeholder="Repetitions"
+                #repstime="ngModel">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input 
+                matInput
+                name="sets"
+                ngModel
+                type="number"
+                required
+                placeholder="Sets"
+                #sets="ngModel">
+        </mat-form-field>
+        
+            <button mat-raised-button
+            color="accent"
+            type="submit">Add exercise</button>
+        
+    </form>
+</mat-card>

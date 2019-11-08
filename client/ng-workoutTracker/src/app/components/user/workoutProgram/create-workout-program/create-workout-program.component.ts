@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { WorkoutProgramService } from 'src/app/shared/services/workout-program.service';
 import { NgForm } from '@angular/forms';
 import { IWorkoutProgram, IWorkoutExercise } from 'src/app/shared/components/models/workout-program.model';
-import { ActivatedRoute } from '@angular/router';
+import { AuthenticationService } from 'src/app/shared/services';
 
 @Component({
   selector: 'wt-create-workout-program',
@@ -10,25 +10,28 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./create-workout-program.component.scss']
 })
 export class CreateWorkoutProgramComponent {
-  private route: ActivatedRoute;
-  private id: String;
 
-  ngOnInit() {
-    this.id = this.route.snapshot.paramMap.get('userid');
-  }
-  constructor(private workoutProgramService: WorkoutProgramService) {}
+  constructor(private workoutProgramService: WorkoutProgramService, private authenticationService: AuthenticationService) {}
 
   onAddWorkoutProgram(form: NgForm){
     if(form.invalid){
       return;
     }
+
+    const exercise: IWorkoutExercise = {
+      name: "Ex1",
+      description: "desc1",
+      repstime: "10",
+      sets: 10
+    }
+
     const workoutProgram: IWorkoutProgram = {
       name: form.value.nameInput,
       description: form.value.descriptionInput,
-      exercises: [{name:"name1", description: "desc2", sets: 5, repstime: "10"}]
+      exercises: [exercise]
     };
     
-    this.workoutProgramService.createWorkoutProgram("5dc439a423cc8134406684fd", workoutProgram);
+    this.workoutProgramService.createWorkoutProgram(this.authenticationService.getUserId(), workoutProgram).subscribe();
     form.resetForm();
   }
 }

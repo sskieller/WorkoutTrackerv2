@@ -29,6 +29,7 @@ export class WorkoutProgramByIdComponent implements OnInit {
     this.workoutProgramService.getWorkoutProgramById(this.userId, this.workoutProgramId)
       .subscribe((data: any) => {
         this.workoutProgram$ = data;
+        console.log(data);
         this.convWorkoutProgram = Object.keys(data).map(key => ({ type: key, value: data[key] }));
       });
   }
