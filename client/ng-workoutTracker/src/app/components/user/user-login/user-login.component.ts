@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class UserLoginComponent implements OnInit {
   user: LoginUser;
+  isLoggedIn: boolean;
   constructor(
     private authService: AuthenticationService,
     private router: Router
@@ -20,9 +21,15 @@ export class UserLoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  login() {
-    this.authService.login(this.user);
+  async login() {
+    this.isLoggedIn = await this.authService.login(this.user);
+    console.log(this.isLoggedIn);
     const url = `/user/${this.authService.getUserId()}`;
+
+    
+
+    console.log("navigating")
     this.router.navigateByUrl(url);
+
   }
 }

@@ -1,1 +1,41 @@
-<p>private-workout-programs works!</p>
+<h1 mat-dialog-title class="text-caption">
+  All programs available with details
+</h1>
+<section mat-dialog-content>
+  <mat-list>
+    <ng-container *ngFor="let program of convPrograms[0].value">
+      <a (click)=(gotoWorkoutProgram(program._id))>
+          <mat-card style="margin:10px">
+              <mat-list-item>
+                <h3 matLine>{{ program.name }}</h3>
+                <p matLine>
+                  <span>{{ program.description }}</span>
+                </p>
+              </mat-list-item>
+              <mat-list style="margin-left:30px;">
+                <div *ngFor="let ex of program.exercises">
+                  <mat-card style="margin:10px">
+                    <mat-list-item>
+                      <h3 matLine>{{ ex.name }}</h3>
+                      <p matLine>
+                        <span>{{ ex.description }}</span>
+                      </p>
+                    </mat-list-item>
+                    <mat-list-item>
+                      <p>
+                        <span>Sets: {{ ex.sets }}</span>
+                      </p>
+                    </mat-list-item>
+                    <mat-list-item>
+                      <p>
+                        <span> Reps or Time: {{ ex.repstime }} </span>
+                      </p>
+                    </mat-list-item>
+                  </mat-card>
+                </div>
+              </mat-list>
+            </mat-card>
+      </a>
+    </ng-container>
+  </mat-list>
+</section>

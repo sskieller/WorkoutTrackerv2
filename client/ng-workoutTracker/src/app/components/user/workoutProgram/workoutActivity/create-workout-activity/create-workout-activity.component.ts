@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { RegisterUser, CreateActivity } from 'src/app/shared/components/models';
+import { AuthenticationService } from 'src/app/shared/services';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'wt-create-workout-activity',
@@ -7,9 +10,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateWorkoutActivityComponent implements OnInit {
 
-  constructor() { }
+  activity: CreateActivity;
+
+  constructor(
+    private authService: AuthenticationService,
+    private router: Router
+  ) {
+    this.activity = new CreateActivity();
+  }
 
   ngOnInit() {
+  }
+
+  registerUser() {
+    const url = `/user/login`;
+    this.router.navigateByUrl(url);
   }
 
 }

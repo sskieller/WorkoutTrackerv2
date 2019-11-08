@@ -28,25 +28,6 @@ export class AuthenticationService {
 
   isUserLoggedIn$ = this.isLoginSubject.asObservable();
 
-
-  // public currentUser(): User {
-  //   if (this.isLoggedIn()) {
-  //     const token = this.getToken();
-  //     const payload = JSON.parse(window.atob(token.split('.')[1]));
-  //     const user = new User();
-  //     console.log(payload);
-  //     user.firstName = payload.name.firstName;
-  //     user.lastName = payload.name.lastName;
-  //     // user._id = payload._id;
-  //     user.username = payload.username;
-  //     user.workoutPrograms = payload.workoutProgram;
-
-  //     return user;
-  //   } else {
-  //     return;
-  //   }
-  // }
-
   isLoggedIn(): Observable<boolean> {
     return this.isLoginSubject.asObservable();
   }
@@ -57,6 +38,7 @@ export class AuthenticationService {
 
   public logout() {
     localStorage.removeItem('token');
+    this.saveUserId('');
     this.isLoginSubject.next(false);
   }
 
@@ -64,9 +46,14 @@ export class AuthenticationService {
     const url = `${this.api_base_url}/user/login`;
     this.http.post<LoginResponse>(url, user).subscribe(data => {
       console.log(data);
-      this.saveToken(data.token);
-      this.saveUserId(data.user._id);
-      return true;
+      if (data.token) {
+        this.saveToken(data.token);
+        this.saveUserId(data.user._id);
+        return true;
+      }
+      else {
+        return false;
+      }
     });
   }
 
@@ -97,7 +84,7 @@ export class AuthenticationService {
   }
 
   public getToken() {
-    const token = window.localStorage.getItem('token');
+    const token = localStorage.getItem('token');
     if (token) {
       return token;
     } else {
@@ -108,6 +95,7 @@ export class AuthenticationService {
   private saveUserId(userId: string) {
     window.localStorage.userId = userId;
   }
+  
   public getUserId(): string {
     return window.localStorage.userId;
     // return '0';

@@ -37,6 +37,11 @@ export class WorkoutProgramService {
       return this.http.get<IWorkoutProgram[]>(url);
     }
 
+    getWorkoutProgramById(userId, workoutProgramId): Observable<IWorkoutProgramPrivate> {
+      const url = `${this.getUrl(userId)}/${workoutProgramId}`;
+      return this.http.get<IWorkoutProgramPrivate>(url);
+    }
+
     /**
      * creates a new workout program for the given user
      * @param userId
