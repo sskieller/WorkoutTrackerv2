@@ -28,7 +28,7 @@ export class CreateWorkoutProgramComponent {
       exercises: [{name:"name1", description: "desc2", sets: 5, repstime: "10"}]
     };
     
-    this.workoutProgramService.createWorkoutProgram("5dc439a423cc8134406684fd", workoutProgram);
+    this.workoutProgramService.createWorkoutProgram(this.id, workoutProgram);
     form.resetForm();
   }
 }
