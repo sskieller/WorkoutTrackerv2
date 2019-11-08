@@ -25,7 +25,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatIconModule} from '@angular/material/icon';
 import {MatGridListModule} from '@angular/material/grid-list';
-
+import {MatButtonModule} from '@angular/material/button';
 const routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: 'new', component: UserRegistrationComponent },
@@ -78,6 +78,7 @@ const routes = [
     RouterModule.forChild(routes),
     HomeModule,
     MatGridListModule,
+    MatButtonModule
   ],
 })
 export class UserModule { }
