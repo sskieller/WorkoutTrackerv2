@@ -18,6 +18,10 @@ export class WorkoutProgramService {
     return this.exercisesUpdated.asObservable();
   }
 
+  updateExercises(currentExercises: IWorkoutExercise[]){
+    this.exercises = currentExercises;
+  }
+
   private getUrl(userId) {
     return `${environment.API_BASE_URL}/user/${userId}/workoutProgram`;
   }
