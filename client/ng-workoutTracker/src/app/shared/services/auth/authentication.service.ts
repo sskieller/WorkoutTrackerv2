@@ -19,12 +19,14 @@ interface LoginResponse {
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private isLoginSubject = new BehaviorSubject<boolean>(this.hasToken());
+  private isLoginSubject = new BehaviorSubject<boolean>(false); // false
   // tslint:disable-next-line: variable-name
   private api_base_url = environment.API_BASE_URL;
   public redirectUrl = '';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    localStorage.clear();
+  }
 
   isUserLoggedIn$ = this.isLoginSubject.asObservable();
 
@@ -32,8 +34,17 @@ export class AuthenticationService {
     return this.isLoginSubject.asObservable();
   }
 
+  isLoggedInLocal(): boolean {
+    return !!localStorage.getItem('token');
+  }
+
   private hasToken(): boolean {
     return !!localStorage.getItem('token');
+  }
+
+  public saveToken(token: string) {
+    localStorage.setItem('token', token);
+    this.isLoginSubject.next(true);
   }
 
   public logout() {
@@ -42,19 +53,24 @@ export class AuthenticationService {
     this.isLoginSubject.next(false);
   }
 
-  public login(user: LoginUser): any {
+
+  public pLogin(user: LoginUser) {
     const url = `${this.api_base_url}/user/login`;
-    this.http.post<LoginResponse>(url, user).subscribe(data => {
+    this.http.post<any>(url, user).subscribe(data => {
       console.log(data);
       if (data.token) {
         this.saveToken(data.token);
         this.saveUserId(data.user._id);
+        this.isLoginSubject.next(true);
+        console.log(this.isLoginSubject.value)
         return true;
       }
-      else {
+
+      return false;
+    }),
+      (err: HttpErrorResponse) => {
         return false;
       }
-    });
   }
 
   public register(user: RegisterUser): any {
@@ -78,10 +94,7 @@ export class AuthenticationService {
       });
   }
 
-  public saveToken(token: string) {
-    localStorage.setItem('token', token);
-    this.isLoginSubject.next(true);
-  }
+
 
   public getToken() {
     const token = localStorage.getItem('token');
@@ -95,7 +108,7 @@ export class AuthenticationService {
   private saveUserId(userId: string) {
     window.localStorage.userId = userId;
   }
-  
+
   public getUserId(): string {
     return window.localStorage.userId;
     // return '0';

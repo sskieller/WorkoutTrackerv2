@@ -13,6 +13,7 @@ export class AppComponent {
 
   // Import isLoggedIn from authentication
   isLoggedIn: Observable<boolean>;
+  // isLoggedIn: boolean;
   userId: string;
 
   constructor(private authService: AuthenticationService,

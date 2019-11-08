@@ -11,6 +11,7 @@ import { AuthenticationService } from 'src/app/shared/services';
 })
 export class CreateWorkoutProgramComponent {
 
+  }
   constructor(private workoutProgramService: WorkoutProgramService, private authenticationService: AuthenticationService) {}
 
   onAddWorkoutProgram(form: NgForm){

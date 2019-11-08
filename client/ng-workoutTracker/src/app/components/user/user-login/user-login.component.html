@@ -1,6 +1,6 @@
 <mat-card>
     <mat-card-content>
-      <form>
+      <form #loginForm="ngForm">
         <mat-form-field>
           <input matInput placeholder="Username"
           [(ngModel)]="user.username"
