@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { IWorkoutProgram, IWorkoutProgramPrivate } from '../components/models';
 import { AuthenticationService } from './auth';
+import { debug } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -41,8 +42,15 @@ export class WorkoutProgramService {
      * @param userId
      * @param workoutProgram
      */
-    createWorkoutProgram(userId, workoutProgram): Observable<IWorkoutProgram> {
+    createWorkoutProgram(userId, workoutProgram: IWorkoutProgram): Observable<IWorkoutProgram> {
       const url = `${this.getUrl(userId)}/new`;
+      console.log("userId: " + userId);
+      console.log("url: " + url);
+      console.log("workoutProgram: " + workoutProgram);
+      console.log("workoutProgram: " + workoutProgram.name);
+      console.log("workoutProgram: " + workoutProgram.description);
+      console.log("workoutProgram: " + workoutProgram.exercises);
+
       return this.http.post<IWorkoutProgram>(url, workoutProgram);
     }
 

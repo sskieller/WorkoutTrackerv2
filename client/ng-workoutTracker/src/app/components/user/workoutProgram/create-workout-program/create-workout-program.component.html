@@ -1,1 +1,33 @@
 <p>create-workout-program works!</p>
+
+<mat-card style="margin-left: 30%; margin-right: 30%;">
+    <form (submit)="onAddWorkoutProgram(programForm)" #programForm="ngForm">
+    <mat-form-field class="add-program">
+      <input matInput placeholder="Input"
+      type="text"
+      name="nameInput"
+      ngModel #titleInput="ngModel"
+      placeholder="Name of workout program"
+      required>
+      <mat-error *ngIf="titleInput.invalid">Please enter a name for your workout program</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="add-program">
+        <input matInput placeholder="Input"
+        type="text"
+        name="descriptionInput"
+        ngModel #descriptionInput="ngModel"
+        placeholder="Aaaand description goes here"
+        required>
+        <mat-error *ngIf="descriptionInput.invalid">Please enter a description for your workout program</mat-error>
+      </mat-form-field>
+
+      <div style="text-align: center;">
+            <button 
+            mat-raised-button
+            color="accent"
+            type="submit"> Save Program
+            </button>
+      </div>
+    </form>
+</mat-card>
