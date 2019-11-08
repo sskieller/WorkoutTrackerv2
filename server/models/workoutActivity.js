@@ -14,7 +14,9 @@ const workoutActivitySchema = new Schema(
 			type: String,
 			required: true,
 		},
-		woActivities: [{type: Schema.Types.ObjectId, ref: "woActivity"}],
+		extra: {
+			type: String
+		}
 	},
 	{
 		timestamps: true,

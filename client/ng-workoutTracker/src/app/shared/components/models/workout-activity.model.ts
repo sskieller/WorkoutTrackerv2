@@ -26,7 +26,7 @@ export class woActivity {
 export interface IWorkoutActivity {
   name: string;
   description: string;
-  woActivities: [IwoActivity];
+  extra: string;
 }
 
 export interface IwoActivity {

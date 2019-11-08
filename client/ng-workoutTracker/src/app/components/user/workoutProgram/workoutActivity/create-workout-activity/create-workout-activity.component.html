@@ -1,38 +1,30 @@
-<p>user-registration works!</p>
+<p>create workout activity works</p>
 <mat-card>
   <mat-card-content>
     <form>
       <mat-form-field>
-          <input matInput [(ngModel)]="user.firstName"
-          name="firstName"
+          <input matInput [(ngModel)]="newActivity.name"
+          name="name"
           required
-          placeholder="Firstname">
+          placeholder="Name">
       </mat-form-field>
 
       <mat-form-field>
-          <input matInput [(ngModel)]="user.lastName"
-          name="lastName"
+          <input matInput [(ngModel)]="newActivity.description"
+          name="description"
           required
-          placeholder="Lastname">
+          placeholder="Description">
       </mat-form-field>
 
       <mat-form-field>
-          <input matInput [(ngModel)]="user.username"
-          name="username"
-          required
-          placeholder="Username">
-      </mat-form-field>
-      <mat-form-field>
-          <input matInput [(ngModel)]="user.password"
-          name="password"
-          type="password"
-          required
-          placeholder="Password">
+          <input matInput [(ngModel)]="newActivity.extra"
+          name="extra"
+          placeholder="Extra">
       </mat-form-field>
     </form>
   </mat-card-content>
 
   <mat-card-actions>
-    <button mat-raised-button (click)="registerUser()">Register</button>
+    <button mat-raised-button (click)="createWorkoutActivity()">Register</button>
   </mat-card-actions>
 </mat-card>

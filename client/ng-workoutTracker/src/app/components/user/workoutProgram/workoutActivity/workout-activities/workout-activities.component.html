@@ -1,1 +1,32 @@
 <p>workout-activities works!</p>
+
+<a (click)="gotoCreateActivity()">
+    <button mat-stroked-button>Create Activity</button>
+</a>
+
+<section mat-dialog-content>
+    <mat-list>
+        <ng-container *ngFor="let activity of workoutActivities$.data.activities">
+            <mat-card style="margin:10px">
+                <mat-list-item>
+                    <h3 matLine>{{activity.name}}</h3>
+                    <p matLine>
+                        <span>Name</span>
+                    </p>
+                </mat-list-item>
+                <mat-list-item>
+                    <h3 matLine>{{activity.description}}</h3>
+                    <p matLine>
+                        <span>Description</span>
+                    </p>
+                </mat-list-item>
+                <mat-list-item *ngIf="activity.extra">
+                    <h3 matLine>{{activity.extra}}</h3>
+                    <p matLine>
+                        <span>Extra</span>
+                    </p>
+                </mat-list-item>
+            </mat-card>
+        </ng-container>
+    </mat-list>
+</section>

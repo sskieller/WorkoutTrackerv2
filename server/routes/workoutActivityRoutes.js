@@ -6,12 +6,12 @@ const workoutActivityController = require( "../controllers/workoutActivityContro
 // Index for /user/:userId/workoutActivity
 router.get( "/:userId/workoutProgram/:workoutProgramId/workoutActivity"
 	, helperFunctions.verifyJWT
-	, workoutActivityController.getAllWorkoutActivity
+	, workoutActivityController.getAllWorkoutActivities
 	, helperFunctions.respondJSON
 	, helperFunctions.errorJSON );
 router.post( "/:userId/workoutProgram/:workoutProgramId/workoutActivity/new"
 	, helperFunctions.verifyJWT
-	, workoutActivityController.createWorkoutActivity
+	, workoutActivityController.createWorkoutActivity1
 	, helperFunctions.respondJSON
 	, helperFunctions.errorJSON );
 router.get( "/:userId/workoutProgram/:workoutProgramId/workoutActivity/:workoutActivityId"

@@ -19,13 +19,13 @@ interface LoginResponse {
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private isLoginSubject = new BehaviorSubject<boolean>(false); // false
+  private isLoginSubject = new BehaviorSubject<boolean>(this.hasToken()); // false
   // tslint:disable-next-line: variable-name
   private api_base_url = environment.API_BASE_URL;
   public redirectUrl = '';
 
   constructor(private http: HttpClient) {
-    localStorage.clear();
+    // localStorage.clear();
   }
 
   isUserLoggedIn$ = this.isLoginSubject.asObservable();

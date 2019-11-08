@@ -36,4 +36,8 @@ export class PrivateWorkoutProgramsComponent implements OnInit {
   gotoWorkoutProgram(programId) {
     this.router.navigateByUrl(`/user/${this.userId}/workoutprogram/${programId}`);
   }
+
+  gotoCreateWorkoutProgram() {
+    this.router.navigateByUrl(`/user/${this.userId}/workoutprogram/new`);
+  }
 }
